@@ -1,3 +1,3 @@
 spring:
-  application:
-    name: Velas Candil
+  profiles:
+    active: dev

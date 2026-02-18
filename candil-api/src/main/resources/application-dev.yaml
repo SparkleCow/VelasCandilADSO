@@ -1,0 +1,37 @@
+server:
+  port: 8080
+  address: 0.0.0.0
+
+spring:
+  application:
+    name: Velas Candil
+
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:candles}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:123456789}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 50MB
+
+  destination:
+    folder: src/main/resources/static/
+
+application:
+  security:
+    jwt:
+      secret_key: ${SECRET_KEY}
+      expiration: 8640000
+  cors:
+    allowed-origins: ${ALLOWED_ORIGINS:*}
+
