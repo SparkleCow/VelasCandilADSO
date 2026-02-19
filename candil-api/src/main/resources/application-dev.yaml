@@ -30,7 +30,7 @@ spring:
 application:
   security:
     jwt:
-      secret_key: ${SECRET_KEY}
+      secret_key: "${SECRET_KEY:O*anTe%IVEt@7%pkHcoyrNb3,Hq+:mJmkHt,R=nBC)Q}"
       expiration: 8640000
   cors:
     allowed-origins: ${ALLOWED_ORIGINS:*}
