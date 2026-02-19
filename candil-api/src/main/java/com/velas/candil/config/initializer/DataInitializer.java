@@ -24,7 +24,7 @@ public class DataInitializer {
     private void createRoleIfNotExists(List<RoleEnum> roleEnum) {
 
         roleEnum.forEach(role -> {
-            roleRepository.findByName(role)
+            roleRepository.findByRole(role)
                     .orElseGet(() -> roleRepository.save(
                             Role.builder()
                                     .role(role)
