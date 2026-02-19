@@ -1,11 +1,13 @@
 package com.velas.candil.controllers;
 
 import com.velas.candil.models.AuthLoginDto;
+import com.velas.candil.models.AuthRegisterDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,7 +46,9 @@ public class AuthController {
             @ApiResponse(responseCode = "400", description = "Malformed request")
     })
     @PostMapping("/register")
-    public ResponseEntity<Void> register(){
+    public ResponseEntity<Void> register(
+            @Parameter(description = "User information for register", required = true)
+            @RequestBody @Valid AuthRegisterDto authRegisterDto){
         return ResponseEntity.ok().build();
     }
 }

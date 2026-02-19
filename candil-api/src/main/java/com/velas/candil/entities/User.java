@@ -2,10 +2,15 @@ package com.velas.candil.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -17,29 +22,76 @@ import java.util.Set;
  * during the authentication process.
  */
 @Entity
-@Data
+@Table(
+        name = "users",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "username"),
+                @UniqueConstraint(columnNames = "email")
+        }
+)
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users")
+@ToString(exclude = "roles")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EntityListeners(AuditingEntityListener.class)
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  long id;
+    @EqualsAndHashCode.Include
+    private Long id;
+
+    @Column(nullable = false, length = 100)
     private String firstName;
+
+    @Column(nullable = false, length = 100)
     private String lastName;
+
+    @Column(nullable = false, length = 50)
     private String username;
+
+    @Column(nullable = false, length = 100)
     private String email;
+
+    @Column(nullable = false, length = 50)
     private String password;
 
-    @ManyToMany
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean accountNonExpired = true;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean accountNonLocked = true;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean credentialsNonExpired = true;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean enabled = true;
+
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns =  @JoinColumn(name = "role_id")
+            joinColumns = @JoinColumn(name = "user_id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "role_id", nullable = false)
     )
-    private Set<Role> roles;
+    @Builder.Default
+    private Set<Role> roles = new HashSet<>();
+
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    @Column(nullable = true)
+    private LocalDateTime updatedAt;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -48,26 +100,26 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return "";
+        return this.username;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
+        return this.accountNonExpired;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
+        return this.accountNonLocked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return UserDetails.super.isCredentialsNonExpired();
+        return this.credentialsNonExpired;
     }
 
     @Override
     public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
+        return this.enabled;
     }
 }
