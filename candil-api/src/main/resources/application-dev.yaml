@@ -54,4 +54,7 @@ application:
       expiration: 8640000
   cors:
     allowed-origins: ${ALLOWED_ORIGINS:*}
+  mailing:
+    frontend:
+      activation-url: http://localhost:4200/activate-account
 
