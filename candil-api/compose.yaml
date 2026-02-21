@@ -6,4 +6,20 @@ services:
       - 'POSTGRES_PASSWORD=123456789'
       - 'POSTGRES_USER=postgres'
     ports:
-      - '5432'
+      - "5432:5432"
+    networks:
+      - candle
+
+  maildev:
+    image: maildev/maildev
+    container_name: maildev
+    ports:
+      - "1080:1080"
+      - "1025:1025"  
+    restart: unless-stopped
+    networks:
+      - candle
+
+networks:
+  candle:
+    driver: bridge
