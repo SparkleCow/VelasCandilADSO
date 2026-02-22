@@ -18,6 +18,17 @@
             background-color: #fff;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .container h1{
+            text-align: center;
+        }
+        .banner {
+            width: 70%;
+            margin: 0 auto;
+            display: block;
         }
         .activation-code {
             font-size: 36px;
@@ -42,6 +53,7 @@
 <body>
 <div class="container">
     <h1>Account Activation</h1>
+    <img class="banner" src="https://cdn.atrapalo.com/o/event/4893786/1652204.jpg?auto=avif&width=1280&quality=75">
     <p class="greeting" th:text="'Hello ' + ${username} + ','"></p>
     <p>Thank you for signing up! Please use the following activation code to activate your account:</p>
     <div class="activation-code"><span th:text="${activationCode}"></span></div>
