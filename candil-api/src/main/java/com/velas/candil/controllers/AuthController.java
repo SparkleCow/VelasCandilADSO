@@ -2,24 +2,26 @@ package com.velas.candil.controllers;
 
 import com.velas.candil.models.AuthLoginDto;
 import com.velas.candil.models.AuthRegisterDto;
+import com.velas.candil.models.AuthResponseDto;
+import com.velas.candil.services.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1/auth")
 @Tag(name = "Authentication", description = "Operations related to authentication (Login - register - validation)")
 public class AuthController {
+
+    private final AuthenticationService authenticationService;
 
     @Operation(
             summary = "Authenticate user",
@@ -31,10 +33,10 @@ public class AuthController {
             @ApiResponse(responseCode = "400", description = "Malformed request")
     })
     @PostMapping("/login")
-    public ResponseEntity<Void> login(
+    public ResponseEntity<AuthResponseDto> login(
                             @Parameter(description = "User credentials", required = true)
                             @RequestBody AuthLoginDto authLoginDto){
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(authenticationService.login(authLoginDto.username(), authLoginDto.password()));
     }
 
     @Operation(
@@ -48,7 +50,28 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<Void> register(
             @Parameter(description = "User information for register", required = true)
-            @RequestBody @Valid AuthRegisterDto authRegisterDto){
+            @RequestBody @Valid AuthRegisterDto authRegisterDto) throws MessagingException {
+        authenticationService.register(authRegisterDto);
         return ResponseEntity.ok().build();
     }
+
+    @Operation(
+            summary = "Validate activation token",
+            description = "Activates a user account using the token sent by email."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Activation successful"),
+            @ApiResponse(responseCode = "400", description = "Invalid or malformed token"),
+            @ApiResponse(responseCode = "404", description = "Token not found"),
+            @ApiResponse(responseCode = "409", description = "Account already activated")
+    })
+    @PostMapping("/activate")
+    public ResponseEntity<Void> activateAccount(
+            @Parameter(description = "Activation token sent to the user's email", required = true)
+            @RequestParam String token
+    ) throws MessagingException {
+        authenticationService.activateAccount(token);
+        return ResponseEntity.ok().build();
+    }
+
 }
