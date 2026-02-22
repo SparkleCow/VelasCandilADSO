@@ -3,6 +3,7 @@ package com.velas.candil.services;
 import com.velas.candil.entities.User;
 import com.velas.candil.models.AuthRegisterDto;
 import com.velas.candil.models.AuthResponseDto;
+import jakarta.mail.MessagingException;
 
 /**
  * Service responsible for handling authentication and account lifecycle operations.
@@ -12,14 +13,8 @@ import com.velas.candil.models.AuthResponseDto;
 public interface AuthenticationService {
 
     AuthResponseDto login(String username, String password);
-    /**
-     * Performs logout logic.
-     * Depending on the implementation, this may invalidate tokens,
-     * clear security context, or handle token blacklisting.
-     */
-    void logout(String token);
-    void register(AuthRegisterDto authRegisterDto);
-    void sendValidationEmail(User user);
+    void register(AuthRegisterDto authRegisterDto) throws MessagingException;
+    void sendValidationEmail(User user) throws MessagingException;
     String generateAndSaveToken(User user);
     String generateToken(int length);
     /**
@@ -27,5 +22,5 @@ public interface AuthenticationService {
      * The provided token is an email validation token,
      * not a JWT.
      */
-    void activateAccount(String token);
+    void activateAccount(String token) throws MessagingException;
 }
