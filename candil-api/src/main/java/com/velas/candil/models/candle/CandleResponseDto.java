@@ -1,4 +1,18 @@
 package com.velas.candil.models.candle;
 
-public record CandleResponseDto() {
-}
+import java.util.List;
+import java.util.Set;
+
+public record CandleResponseDto(
+        Long id,
+        String name,
+        String description,
+        String principalImage,
+        Integer stock,
+        Double price,
+        Set<MaterialEnum> materialEnums,
+        Set<FeatureEnum> featureEnums,
+        Set<CategoryEnum> categories,
+        List<String> images,
+        List<Long> ingredientIds
+) {}
