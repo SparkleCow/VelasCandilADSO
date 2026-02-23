@@ -1,4 +1,4 @@
-package com.velas.candil.entities;
+package com.velas.candil.entities.user;
 
 import com.velas.candil.models.RoleEnum;
 import jakarta.persistence.*;

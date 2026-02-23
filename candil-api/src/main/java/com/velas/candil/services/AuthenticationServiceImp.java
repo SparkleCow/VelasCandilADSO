@@ -1,9 +1,9 @@
 package com.velas.candil.services;
 
 import com.velas.candil.config.jwt.JwtUtils;
-import com.velas.candil.entities.ActivateToken;
-import com.velas.candil.entities.Role;
-import com.velas.candil.entities.User;
+import com.velas.candil.entities.user.ActivateToken;
+import com.velas.candil.entities.user.Role;
+import com.velas.candil.entities.user.User;
 import com.velas.candil.mappers.UserMapper;
 import com.velas.candil.models.AuthRegisterDto;
 import com.velas.candil.models.AuthResponseDto;

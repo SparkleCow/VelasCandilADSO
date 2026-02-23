@@ -1,6 +1,6 @@
 package com.velas.candil.services;
 
-import com.velas.candil.entities.User;
+import com.velas.candil.entities.user.User;
 import com.velas.candil.models.AuthRegisterDto;
 import com.velas.candil.models.AuthResponseDto;
 import jakarta.mail.MessagingException;

@@ -1,6 +1,6 @@
 package com.velas.candil.repositories;
 
-import com.velas.candil.entities.User;
+import com.velas.candil.entities.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

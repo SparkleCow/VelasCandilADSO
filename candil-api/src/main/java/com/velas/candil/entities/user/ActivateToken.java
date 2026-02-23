@@ -1,4 +1,4 @@
-package com.velas.candil.entities;
+package com.velas.candil.entities.user;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,6 +8,11 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+/**
+ * Entity that represents an account activation token.
+ * This token is generated when a user registers and is used
+ * to verify and activate their account.
+ */
 @Entity
 @Builder
 @Data

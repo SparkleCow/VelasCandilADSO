@@ -1,6 +1,6 @@
 package com.velas.candil.mappers;
 
-import com.velas.candil.entities.User;
+import com.velas.candil.entities.user.User;
 import com.velas.candil.models.AuthRegisterDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
