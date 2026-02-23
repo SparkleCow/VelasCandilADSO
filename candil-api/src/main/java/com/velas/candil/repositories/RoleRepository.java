@@ -1,7 +1,7 @@
 package com.velas.candil.repositories;
 
 import com.velas.candil.entities.user.Role;
-import com.velas.candil.models.RoleEnum;
+import com.velas.candil.models.user.RoleEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

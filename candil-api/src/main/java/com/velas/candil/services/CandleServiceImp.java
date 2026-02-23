@@ -1,8 +1,8 @@
 package com.velas.candil.services;
 
-import com.velas.candil.entities.candle.Category;
-import com.velas.candil.entities.candle.Feature;
-import com.velas.candil.entities.candle.Material;
+import com.velas.candil.models.candle.CategoryEnum;
+import com.velas.candil.models.candle.FeatureEnum;
+import com.velas.candil.models.candle.MaterialEnum;
 import com.velas.candil.models.candle.CandleRequestDto;
 import com.velas.candil.models.candle.CandleResponseDto;
 import com.velas.candil.models.candle.CandleUpdateDto;
@@ -22,17 +22,17 @@ public class CandleServiceImp implements CandleService {
     private final CandleRepository candleRepository;
 
     @Override
-    public Page<CandleResponseDto> findByCategory(Pageable pageable, Category category) {
+    public Page<CandleResponseDto> findByCategory(Pageable pageable, CategoryEnum categoryEnum) {
         return null;
     }
 
     @Override
-    public Page<CandleResponseDto> findByMaterial(Pageable pageable, Material material) {
+    public Page<CandleResponseDto> findByMaterial(Pageable pageable, MaterialEnum materialEnum) {
         return null;
     }
 
     @Override
-    public Page<CandleResponseDto> findByFeature(Pageable pageable, Feature feature) {
+    public Page<CandleResponseDto> findByFeature(Pageable pageable, FeatureEnum featureEnum) {
         return null;
     }
 

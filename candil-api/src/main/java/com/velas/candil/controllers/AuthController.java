@@ -1,8 +1,8 @@
 package com.velas.candil.controllers;
 
-import com.velas.candil.models.AuthLoginDto;
-import com.velas.candil.models.AuthRegisterDto;
-import com.velas.candil.models.AuthResponseDto;
+import com.velas.candil.models.user.AuthLoginDto;
+import com.velas.candil.models.user.AuthRegisterDto;
+import com.velas.candil.models.user.AuthResponseDto;
 import com.velas.candil.services.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

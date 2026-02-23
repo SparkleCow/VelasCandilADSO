@@ -1,7 +1,7 @@
 package com.velas.candil.config.initializer;
 
 import com.velas.candil.entities.user.Role;
-import com.velas.candil.models.RoleEnum;
+import com.velas.candil.models.user.RoleEnum;
 import com.velas.candil.repositories.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
