@@ -9,7 +9,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -21,7 +25,7 @@ import java.util.Set;
 @Data
 @Builder
 @Table(name = "candles")
-// TODO - AUDITING
+@EntityListeners(AuditingEntityListener.class)
 public class Candle{
 
     @Id
@@ -53,8 +57,17 @@ public class Candle{
     @ElementCollection(fetch = FetchType.LAZY)
     private List<String> images = new ArrayList<>();
 
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    @Column(nullable = true)
+    private LocalDateTime updatedAt;
+
     @OneToMany(mappedBy = "candle", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Ingredient> ingredients = new ArrayList<>();
+
     private Double price = 0.0;
 
     public void removeStock(Integer quantity){

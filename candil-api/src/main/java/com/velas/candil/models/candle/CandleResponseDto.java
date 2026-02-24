@@ -1,5 +1,7 @@
 package com.velas.candil.models.candle;
 
+import com.velas.candil.models.ingredient.IngredientResponseDto;
+
 import java.util.List;
 import java.util.Set;
 
@@ -14,5 +16,5 @@ public record CandleResponseDto(
         Set<FeatureEnum> featureEnums,
         Set<CategoryEnum> categories,
         List<String> images,
-        List<Long> ingredientIds
+        List<IngredientResponseDto> ingredients
 ) {}
