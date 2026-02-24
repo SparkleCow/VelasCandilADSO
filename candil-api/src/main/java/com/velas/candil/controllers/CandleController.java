@@ -1,13 +1,148 @@
 package com.velas.candil.controllers;
 
+import com.velas.candil.models.candle.CategoryEnum;
+import com.velas.candil.models.candle.FeatureEnum;
+import com.velas.candil.models.candle.MaterialEnum;
+import com.velas.candil.models.candle.CandleRequestDto;
+import com.velas.candil.models.candle.CandleResponseDto;
+import com.velas.candil.models.candle.CandleUpdateDto;
+import com.velas.candil.services.CandleService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1/candle")
 @Tag(name = "Candles", description = "Operations related with candles CRUD")
 public class CandleController {
+
+    private final CandleService candleService;
+
+    @Operation(summary = "Create a new candle")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Candle created successfully",
+                    content = @Content(schema = @Schema(implementation = CandleResponseDto.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid request body", content = @Content)
+    })
+    @PostMapping
+    public ResponseEntity<CandleResponseDto> create(
+            @RequestBody CandleRequestDto requestDto) {
+
+        CandleResponseDto response = candleService.create(requestDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @Operation(summary = "Get all candles with pagination")
+    @ApiResponse(responseCode = "200", description = "Candles retrieved successfully")
+    @GetMapping
+    public ResponseEntity<Page<CandleResponseDto>> findAll(Pageable pageable) {
+        return ResponseEntity.ok(candleService.findAll(pageable));
+    }
+
+    @Operation(summary = "Get candle by id")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Candle found"),
+            @ApiResponse(responseCode = "404", description = "Candle not found", content = @Content)
+    })
+    @GetMapping("/{id}")
+    public ResponseEntity<CandleResponseDto> findById(
+            @Parameter(description = "Candle identifier")
+            @PathVariable Long id) {
+
+        return ResponseEntity.ok(candleService.findById(id));
+    }
+
+    @Operation(summary = "Update an existing candle")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Candle updated successfully"),
+            @ApiResponse(responseCode = "404", description = "Candle not found", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Invalid update data", content = @Content)
+    })
+    @PutMapping("/{id}")
+    public ResponseEntity<CandleResponseDto> update(
+            @PathVariable Long id,
+            @RequestBody CandleUpdateDto updateDto) {
+
+        return ResponseEntity.ok(candleService.update(updateDto, id));
+    }
+
+    @Operation(summary = "Delete candle by id")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "Candle deleted successfully"),
+            @ApiResponse(responseCode = "404", description = "Candle not found", content = @Content)
+    })
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+
+        candleService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "Find candles by category")
+    @ApiResponse(responseCode = "200", description = "Candles filtered by category")
+    @GetMapping("/category")
+    public ResponseEntity<Page<CandleResponseDto>> findByCategory(
+            Pageable pageable,
+            @RequestParam CategoryEnum categoryEnum) {
+
+        return ResponseEntity.ok(
+                candleService.findByCategory(pageable, categoryEnum));
+    }
+
+    @Operation(summary = "Find candles by material")
+    @ApiResponse(responseCode = "200", description = "Candles filtered by material")
+    @GetMapping("/material")
+    public ResponseEntity<Page<CandleResponseDto>> findByMaterial(
+            Pageable pageable,
+            @RequestParam MaterialEnum materialEnum) {
+
+        return ResponseEntity.ok(
+                candleService.findByMaterial(pageable, materialEnum));
+    }
+
+    @Operation(summary = "Find candles by feature")
+    @ApiResponse(responseCode = "200", description = "Candles filtered by feature")
+    @GetMapping("/feature")
+    public ResponseEntity<Page<CandleResponseDto>> findByFeature(
+            Pageable pageable,
+            @RequestParam FeatureEnum featureEnum) {
+
+        return ResponseEntity.ok(
+                candleService.findByFeature(pageable, featureEnum));
+    }
+
+    @Operation(summary = "Find candles by creation date")
+    @ApiResponse(responseCode = "200", description = "Candles filtered by date")
+    @GetMapping("/date")
+    public ResponseEntity<Page<CandleResponseDto>> findByDate(
+            Pageable pageable,
+            @RequestParam Date date) {
+
+        return ResponseEntity.ok(
+                candleService.findByDate(pageable, date));
+    }
+
+    @Operation(summary = "Search candles by name")
+    @ApiResponse(responseCode = "200", description = "Candles filtered by name")
+    @GetMapping("/search")
+    public ResponseEntity<Page<CandleResponseDto>> findByNameContaining(
+            Pageable pageable,
+            @RequestParam String name) {
+
+        return ResponseEntity.ok(
+                candleService.findByNameContaining(pageable, name));
+    }
 }

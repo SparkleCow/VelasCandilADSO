@@ -58,3 +58,7 @@ application:
     frontend:
       activation-url: http://localhost:4200/activate-account
 
+candle:
+  margin:
+    multiplier: 1.7
+

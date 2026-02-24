@@ -1,6 +1,9 @@
 package com.velas.candil.entities.candle;
 
 import com.velas.candil.entities.ingredient.Ingredient;
+import com.velas.candil.models.candle.CategoryEnum;
+import com.velas.candil.models.candle.FeatureEnum;
+import com.velas.candil.models.candle.MaterialEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,19 +35,19 @@ public class Candle{
     @CollectionTable(name = "product_materials", joinColumns = @JoinColumn(name = "product_id"))
     @Column(name = "material")
     @Enumerated(EnumType.STRING)
-    private Set<Material> materials = new HashSet<>();
+    private Set<MaterialEnum> materialEnums = new HashSet<>();
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "product_features", joinColumns = @JoinColumn(name = "product_id"))
     @Column(name = "feature")
     @Enumerated(EnumType.STRING)
-    private Set<Feature> features = new HashSet<>();
+    private Set<FeatureEnum> featureEnums = new HashSet<>();
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "product_categories", joinColumns = @JoinColumn(name = "product_id"))
     @Column(name = "category")
     @Enumerated(EnumType.STRING)
-    private Set<Category> categories = new HashSet<>();
+    private Set<CategoryEnum> categories = new HashSet<>();
 
     @ElementCollection(fetch = FetchType.LAZY)
     private List<String> images = new ArrayList<>();

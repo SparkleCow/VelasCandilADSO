@@ -1,6 +1,6 @@
 package com.velas.candil.entities.user;
 
-import com.velas.candil.models.RoleEnum;
+import com.velas.candil.models.user.RoleEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package com.velas.candil.models;
+package com.velas.candil.models.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
