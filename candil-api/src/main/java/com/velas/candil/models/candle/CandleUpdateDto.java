@@ -11,6 +11,5 @@ public record CandleUpdateDto(
         Set<MaterialEnum> materialEnums,
         Set<FeatureEnum> featureEnums,
         Set<CategoryEnum> categories,
-        List<String> images,
-        List<Long> ingredientIds
+        List<String> images
 ) {}

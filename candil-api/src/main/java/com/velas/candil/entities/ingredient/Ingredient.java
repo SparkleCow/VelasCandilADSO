@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @Table(name = "ingredients")
+/*TODO - auditing*/
 public class Ingredient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
