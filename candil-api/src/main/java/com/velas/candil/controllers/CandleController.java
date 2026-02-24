@@ -25,7 +25,7 @@ import java.util.Date;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/candle")
+@RequestMapping("/v1/candles")
 @Tag(name = "Candles", description = "Operations related with candles CRUD")
 public class CandleController {
 

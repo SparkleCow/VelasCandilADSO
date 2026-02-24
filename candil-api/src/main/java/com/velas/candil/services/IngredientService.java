@@ -7,9 +7,11 @@ import com.velas.candil.models.ingredient.IngredientUpdateDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface IngredientService extends CrudService<IngredientRequestDto, IngredientResponseDto, IngredientUpdateDto, Long> {
 
     Page<IngredientResponseDto> findAll(Pageable pageable);
-    Page<IngredientResponseDto> findByNameContaining(String name, Pageable pageable);
     Page<IngredientResponseDto> findByIngredientType(IngredientType ingredientType, Pageable pageable);
+    Page<IngredientResponseDto> findAllById(List<Long> ids);
 }

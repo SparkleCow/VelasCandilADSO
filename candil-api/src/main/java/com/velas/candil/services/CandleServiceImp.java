@@ -52,9 +52,10 @@ public class CandleServiceImp implements CandleService {
 
     @Override
     public Page<CandleResponseDto> findByDate(Pageable pageable, Date date) {
-        log.info("Fetching candles by creation date: {}", date);
-        return candleRepository.findByCreatedAt(date, pageable)
-                .map(candleMapper::toResponse);
+//        log.info("Fetching candles by creation date: {}", date);
+//        return candleRepository.findByCreatedAt(date, pageable)
+//                .map(candleMapper::toResponse);
+        return null;
     }
 
     @Override

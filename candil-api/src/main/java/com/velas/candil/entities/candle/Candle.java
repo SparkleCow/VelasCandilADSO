@@ -21,6 +21,7 @@ import java.util.Set;
 @Data
 @Builder
 @Table(name = "candles")
+// TODO - AUDITING
 public class Candle{
 
     @Id

@@ -24,5 +24,5 @@ public interface CandleRepository extends JpaRepository<Candle, Long> {
 
     Page<Candle> findByNameContainingIgnoreCase(String name, Pageable pageable);
 
-    Page<Candle> findByCreatedAt(Date date, Pageable pageable);
+    // Page<Candle> findByCreatedAt(Date date, Pageable pageable);
 }
