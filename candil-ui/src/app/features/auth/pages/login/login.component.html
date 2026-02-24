@@ -1,5 +1,51 @@
-<form [formGroup]="form" (ngSubmit)="submit()">
-  <input type="text" placeholder="Username" formControlName="username">
-  <input type="password" placeholder="Password" formControlName="password">
-  <button type="submit" [disabled]="form.invalid">Login</button>
-</form>
+<div class="auth-container">
+  <mat-card class="auth-card">
+
+    <h2 class="title">Iniciar Sesión</h2>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Usuario</mat-label>
+        <input matInput formControlName="username">
+        <mat-error *ngIf="form.get('username')?.hasError('required')">
+          El usuario es obligatorio
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Contraseña</mat-label>
+        <input matInput
+               [type]="hidePassword() ? 'password' : 'text'"
+               formControlName="password">
+
+        <button mat-icon-button
+                matSuffix
+                type="button"
+                (click)="hidePassword.set(!hidePassword())">
+          <mat-icon>
+            {{ hidePassword() ? 'visibility_off' : 'visibility' }}
+          </mat-icon>
+        </button>
+
+        <mat-error *ngIf="form.get('password')?.hasError('required')">
+          La contraseña es obligatoria
+        </mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button
+              color="primary"
+              class="full-width"
+              type="submit"
+              [disabled]="form.invalid">
+        Ingresar
+      </button>
+
+    </form>
+
+    <div class="link">
+      <a routerLink="/register">¿No tienes cuenta? Regístrate</a>
+    </div>
+
+  </mat-card>
+</div>

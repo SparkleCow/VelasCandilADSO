@@ -1,8 +1,90 @@
-<form [formGroup]="form" (ngSubmit)="submit()">
-  <input type="text" placeholder="First Name" formControlName="firstName">
-  <input type="text" placeholder="Last Name" formControlName="lastName">
-  <input type="text" placeholder="Username" formControlName="username">
-  <input type="email" placeholder="Email" formControlName="email">
-  <input type="password" placeholder="Password" formControlName="password">
-  <button type="submit" [disabled]="form.invalid">Register</button>
-</form>
+<div class="auth-container">
+  <mat-card class="auth-card">
+
+    <h2 class="title">Crear Cuenta</h2>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+
+      <!-- Nombre -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="firstName">
+        <mat-error *ngIf="form.get('firstName')?.hasError('required')">
+          El nombre es obligatorio
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Apellido -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Apellido</mat-label>
+        <input matInput formControlName="lastName">
+        <mat-error *ngIf="form.get('lastName')?.hasError('required')">
+          El apellido es obligatorio
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Usuario -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Usuario</mat-label>
+        <input matInput formControlName="username">
+        <mat-error *ngIf="form.get('username')?.hasError('required')">
+          El usuario es obligatorio
+        </mat-error>
+        <mat-error *ngIf="form.get('username')?.hasError('minlength')">
+          Mínimo 4 caracteres
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Email -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email">
+        <mat-error *ngIf="form.get('email')?.hasError('required')">
+          El email es obligatorio
+        </mat-error>
+        <mat-error *ngIf="form.get('email')?.hasError('email')">
+          Email inválido
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Password -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Contraseña</mat-label>
+        <input matInput
+               [type]="hidePassword() ? 'password' : 'text'"
+               formControlName="password">
+
+        <button mat-icon-button
+                matSuffix
+                type="button"
+                (click)="hidePassword.set(!hidePassword())">
+          <mat-icon>
+            {{ hidePassword() ? 'visibility_off' : 'visibility' }}
+          </mat-icon>
+        </button>
+
+        <mat-error *ngIf="form.get('password')?.hasError('required')">
+          La contraseña es obligatoria
+        </mat-error>
+        <mat-error *ngIf="form.get('password')?.hasError('minlength')">
+          Mínimo 8 caracteres
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Botón -->
+      <button mat-raised-button
+              color="primary"
+              class="full-width"
+              type="submit"
+              [disabled]="form.invalid">
+        Registrarse
+      </button>
+
+    </form>
+
+    <div class="link">
+      <a routerLink="/login">¿Ya tienes cuenta? Inicia sesión</a>
+    </div>
+
+  </mat-card>
+</div>
