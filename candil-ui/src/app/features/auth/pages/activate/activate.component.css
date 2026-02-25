@@ -1,0 +1,28 @@
+.auth-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+}
+
+.auth-card {
+  width: 400px;
+  padding: 2rem;
+  border-radius: 16px;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.link {
+  margin-top: 1rem;
+  text-align: center;
+}

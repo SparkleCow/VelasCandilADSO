@@ -1,1 +1,43 @@
-<p>activate works!</p>
+<div class="auth-container">
+  <mat-card class="auth-card">
+
+    <h2 class="title">Activar Cuenta</h2>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Código de activación</mat-label>
+        <input matInput
+               formControlName="token"
+               maxlength="6"
+               inputmode="numeric">
+
+        <mat-error *ngIf="form.get('token')?.hasError('required')">
+          El código es obligatorio
+        </mat-error>
+
+        <mat-error *ngIf="form.get('token')?.hasError('minlength')">
+          Debe tener 6 dígitos
+        </mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button
+              color="primary"
+              class="full-width"
+              type="submit"
+              [disabled]="form.invalid || loading()">
+        Activar
+      </button>
+
+    </form>
+
+    <div class="link">
+      <a routerLink="/login">Volver al login</a>
+    </div>
+
+    <p *ngIf="error()" style="color:red; text-align:center; margin-top:1rem;">
+      Código inválido o expirado
+    </p>
+
+  </mat-card>
+</div>
