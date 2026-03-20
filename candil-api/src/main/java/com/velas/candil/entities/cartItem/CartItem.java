@@ -30,6 +30,7 @@ public class CartItem {
     @Column(nullable = false)
     private Integer quantity;
 
+    //Price per candle
     @Column(nullable = false)
     private BigDecimal priceSnapshot;
 
