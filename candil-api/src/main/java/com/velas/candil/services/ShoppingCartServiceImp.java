@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -71,21 +72,58 @@ public class ShoppingCartServiceImp implements ShoppingCartService{
 
     @Override
     public ShoppingCart removeOneItem(Long userId, Long candleId) {
-        return null;
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        ShoppingCart shoppingCart = shoppingCartRepository.findByUser(user)
+                .orElseThrow(() -> new RuntimeException("Shopping cart not found"));
+
+        CartItem cartItem = shoppingCart.getCartItems().stream()
+                .filter(x -> Objects.equals(x.getCandle().getId(), candleId))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Shopping cart item not found"));
+
+        if (cartItem.getQuantity() > 1) {
+            cartItem.decreaseQuantity(1);
+        } else {
+            shoppingCart.getCartItems().remove(cartItem);
+        }
+
+        return shoppingCartRepository.save(shoppingCart);
     }
 
     @Override
     public ShoppingCart removeItemCompletely(Long userId, Long candleId) {
-        return null;
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        ShoppingCart shoppingCart = shoppingCartRepository.findByUser(user)
+                .orElseThrow(() -> new RuntimeException("Shopping cart not found"));
+
+        CartItem cartItem = shoppingCart.getCartItems().stream()
+                .filter(x -> Objects.equals(x.getCandle().getId(), candleId))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Shopping cart item not found"));
+
+        shoppingCart.getCartItems().remove(cartItem);
+        return shoppingCartRepository.save(shoppingCart);
     }
 
     @Override
     public ShoppingCart clearCart(Long userId) {
-        return null;
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        ShoppingCart shoppingCart = shoppingCartRepository.findByUser(user)
+                .orElseThrow(() -> new RuntimeException("Shopping cart not found"));
+
+         shoppingCart.getCartItems().clear();
+        return shoppingCartRepository.save(shoppingCart);
     }
 
     @Override
     public Order checkout(Long userId) {
+        //TODO
         return null;
     }
 }
