@@ -6,6 +6,7 @@ import com.velas.candil.entities.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,15 +31,23 @@ public class ShoppingCart {
     @OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartItem> cartItems = new ArrayList<>();
 
-    private Double subTotal;
+    private BigDecimal subTotal;
 
     public void addItem(CartItem item) {
         cartItems.add(item);
         item.setShoppingCart(this);
+        recalculateSubTotal();
     }
 
     public void removeItem(CartItem item) {
         cartItems.remove(item);
         item.setShoppingCart(null);
+        recalculateSubTotal();
+    }
+
+    public void recalculateSubTotal() {
+        this.subTotal = cartItems.stream()
+                .map(CartItem::getSubtotal)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }

@@ -2,20 +2,23 @@ package com.velas.candil.services;
 
 import com.velas.candil.entities.order.Order;
 import com.velas.candil.entities.shoppingCart.ShoppingCart;
+import com.velas.candil.models.shoppingCart.ShoppingCartResponseDto;
 
 public interface ShoppingCartService {
 
-    ShoppingCart getOrCreateCart(Long userId);
+    ShoppingCartResponseDto getOrCreateCart(Long userId);
 
-    ShoppingCart getCartByUser(Long userId);
+    ShoppingCartResponseDto getCart(Long userId);
 
-    ShoppingCart addOneItem(Long userId, Long candleId);
+    ShoppingCartResponseDto addItem(Long userId, Long candleId);
 
-    ShoppingCart removeOneItem(Long userId, Long candleId);
+    ShoppingCartResponseDto removeItem(Long userId, Long candleId);
 
-    ShoppingCart removeItemCompletely(Long userId, Long candleId);
+    ShoppingCartResponseDto increaseItemQuantity(Long userId, Long candleId);
 
-    ShoppingCart clearCart(Long userId);
+    ShoppingCartResponseDto decreaseItemQuantity(Long userId, Long candleId);
+
+    ShoppingCartResponseDto clearCart(Long userId);
 
     Order checkout(Long userId);
 }
