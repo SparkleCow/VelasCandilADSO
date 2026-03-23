@@ -1,0 +1,46 @@
+<mat-toolbar color="primary" class="navbar">
+
+  <!-- Logo -->
+  <a mat-button routerLink="/candles" class="brand">
+    <mat-icon>local_fire_department</mat-icon>
+    <span>Velas Candil</span>
+  </a>
+
+  <span class="spacer"></span>
+
+  <!-- Navegación principal -->
+  <nav class="nav-links">
+    <a mat-button routerLink="/candles" routerLinkActive="link-active"
+      [routerLinkActiveOptions]="{ exact: true }">
+      Catálogo
+    </a>
+
+    @if (user.isAdmin()) {
+      <a mat-button routerLink="/admin/candles" routerLinkActive="link-active">
+        Gestión velas
+      </a>
+      <a mat-button routerLink="/admin/ingredients" routerLinkActive="link-active">
+        Ingredientes
+      </a>
+    }
+  </nav>
+
+  <!-- Menú usuario -->
+  <button mat-icon-button [matMenuTriggerFor]="menuUsuario">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+
+  <mat-menu #menuUsuario="matMenu">
+    <div class="menu-header">
+      <p class="menu-username">{{ user.getUsername() }}</p>
+      @if (user.isAdmin()) {
+        <span class="badge-admin">Admin</span>
+      }
+    </div>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      Cerrar sesión
+    </button>
+  </mat-menu>
+
+</mat-toolbar>
