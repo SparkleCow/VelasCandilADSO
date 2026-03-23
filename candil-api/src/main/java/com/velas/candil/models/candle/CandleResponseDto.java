@@ -2,6 +2,7 @@ package com.velas.candil.models.candle;
 
 import com.velas.candil.models.ingredient.IngredientResponseDto;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
@@ -11,7 +12,7 @@ public record CandleResponseDto(
         String description,
         String principalImage,
         Integer stock,
-        Double price,
+        BigDecimal price,
         Set<MaterialEnum> materialEnums,
         Set<FeatureEnum> featureEnums,
         Set<CategoryEnum> categories,
