@@ -7,6 +7,11 @@ export const CANDLE_ROUTES: Routes = [
     canActivate: [authGuard],
     loadComponent: () =>
       import('./pages/home/home.component').then(m => m.HomeComponent)
+  },
+  {
+    path: 'candles',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./pages/candle-list/candle-list.component').then(m => m.CandleListComponent)
   }
-  // candle-list y candle-detail se agregan cuando se creen sus componentes
 ];

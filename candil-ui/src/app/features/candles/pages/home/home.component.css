@@ -1,90 +1,103 @@
 .hero {
-  min-height: calc(100vh - 64px);
+  min-height: calc(100vh - 65px);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #fff8f0 0%, #ffecd2 50%, #fff3e0 100%);
+  background: #fff;
   text-align: center;
-  padding: 40px 24px;
+  padding: 60px 24px;
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .hero-content {
-  max-width: 640px;
+  max-width: 600px;
 }
 
 .hero-title {
-  font-size: 3rem;
+  font-size: 2.8rem;
   font-weight: 300;
   line-height: 1.2;
-  margin: 0 0 24px;
-  color: #3e2723;
+  margin: 0 0 20px;
+  color: #1a1a1a;
   letter-spacing: -0.5px;
 }
 
 .hero-subtitle {
-  font-size: 1.15rem;
-  color: #6d4c41;
-  line-height: 1.7;
-  margin: 0 0 40px;
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.8;
+  margin: 0 0 36px;
+  font-weight: 300;
 }
 
 .hero-btn {
+  background-color: #2e7d32 !important;
+  color: #fff !important;
   padding: 0 32px;
-  height: 48px;
-  font-size: 1rem;
+  height: 46px;
+  font-size: 0.85rem;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  border-radius: 4px !important;
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  box-shadow: none !important;
 }
 
-/* ── Cards de características ── */
+.hero-btn:hover {
+  background-color: #1b5e20 !important;
+}
+
+/* ── Cards ── */
 .features-section {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   max-width: 1000px;
   margin: 0 auto;
-  padding: 64px 24px;
+  padding: 80px 24px;
+  gap: 40px;
 }
 
 .feature-card {
   text-align: center;
-  padding: 32px 24px;
-  border-radius: 16px;
-  background: white;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
-  transition: transform 0.2s, box-shadow 0.2s;
+  padding: 40px 24px;
+  border: 1px solid #ebebeb;
+  border-radius: 4px;
+  background: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .feature-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  border-color: #ccc;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
 }
 
 .feature-icon {
-  font-size: 40px;
-  width: 40px;
-  height: 40px;
-  color: #ff9800;
-  margin-bottom: 16px;
+  font-size: 36px;
+  width: 36px;
+  height: 36px;
+  color: #2e7d32;
+  margin-bottom: 20px;
 }
 
 .feature-card h3 {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 500;
-  margin: 0 0 10px;
-  color: #3e2723;
+  margin: 0 0 12px;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
 }
 
 .feature-card p {
-  font-size: 0.9rem;
-  color: rgba(0, 0, 0, 0.6);
-  line-height: 1.6;
+  font-size: 0.88rem;
+  color: #888;
+  line-height: 1.7;
   margin: 0;
+  font-weight: 300;
 }
 
 @media (max-width: 600px) {
-  .hero-title {
-    font-size: 2rem;
-  }
+  .hero-title { font-size: 2rem; }
 }
