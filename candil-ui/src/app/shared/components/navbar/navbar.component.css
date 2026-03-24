@@ -1,0 +1,71 @@
+.navbar {
+  background: #fff !important;
+  color: #2c2c2c !important;
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: none !important;
+  padding: 0 32px;
+  height: 64px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #2c2c2c;
+  text-decoration: none;
+  letter-spacing: 0.3px;
+}
+
+.brand mat-icon {
+  color: #2e7d32;
+}
+
+.spacer { flex: 1 1 auto; }
+
+.nav-links {
+  display: flex;
+  gap: 8px;
+}
+
+.nav-links a {
+  color: #2c2c2c !important;
+  font-size: 0.82rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.nav-links a:hover {
+  color: #2e7d32 !important;
+}
+
+.link-active {
+  color: #2e7d32 !important;
+  font-weight: 500 !important;
+}
+
+.menu-header {
+  padding: 10px 16px 6px;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  pointer-events: none;
+}
+
+.menu-username {
+  margin: 0;
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #2c2c2c;
+}
+
+.badge-admin {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 1px 8px;
+  border-radius: 10px;
+  background: #2e7d32;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 500;
+}
