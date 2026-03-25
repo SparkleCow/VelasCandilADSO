@@ -10,6 +10,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,6 +19,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Table(name = "ingredients")
 /*TODO - auditing*/
+/*TODO Fix pricing*/
 public class Ingredient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,8 +27,8 @@ public class Ingredient {
     @Enumerated(EnumType.STRING)
     private IngredientsEnum name;
     private Double amount;
-    private Double pricePerUnit;
-    private Double price;
+    private BigDecimal pricePerUnit;
+    private BigDecimal price;
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "candle_id")
@@ -36,15 +39,14 @@ public class Ingredient {
     public Ingredient(IngredientsEnum name, Double amount){
         this.name = name;
         this.amount = amount;
-        this.ingredientType = name.type;
-        this.pricePerUnit = name.pricePerUnit;
+        this.ingredientType = name.getType();
+        this.pricePerUnit = name.getPricePerUnit();
         this.price = calculatePrice();
     }
 
-    public Double calculatePrice(){
-        return amount * pricePerUnit;
+    public BigDecimal calculatePrice(){
+        return pricePerUnit.multiply(BigDecimal.valueOf(amount));
     }
-
     @Override
     public String toString() {
         return "Ingredient{" +
