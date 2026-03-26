@@ -1,7 +1,6 @@
 package com.velas.candil.services;
 
 import com.velas.candil.entities.order.Order;
-import com.velas.candil.entities.shoppingCart.ShoppingCart;
 import com.velas.candil.models.shoppingCart.ShoppingCartResponseDto;
 
 public interface ShoppingCartService {

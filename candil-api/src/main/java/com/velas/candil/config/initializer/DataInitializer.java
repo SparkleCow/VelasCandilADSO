@@ -13,6 +13,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
@@ -53,7 +54,7 @@ public class DataInitializer {
                 .description("A relaxing lavender scented candle.")
                 .principalImage("lavender-main.jpg")
                 .stock(50)
-                .price(35_000.0)
+                .price(new BigDecimal(35000))
                 .materialEnums(Set.of(MaterialEnum.SOY_WAX))
                 .featureEnums(Set.of(FeatureEnum.SCENTED))
                 .categories(Set.of(CategoryEnum.AROMATIC))
@@ -65,7 +66,7 @@ public class DataInitializer {
                 .description("Warm vanilla scent for cozy spaces.")
                 .principalImage("vanilla-main.jpg")
                 .stock(40)
-                .price(32_000.0)
+                .price(new BigDecimal(32000))
                 .materialEnums(Set.of(MaterialEnum.BEESWAX))
                 .featureEnums(Set.of(FeatureEnum.SCENTED))
                 .categories(Set.of(CategoryEnum.DECORATIVE))
@@ -77,7 +78,7 @@ public class DataInitializer {
                 .description("Deep woody aroma for meditation and grounding.")
                 .principalImage("sandalwood-main.jpg")
                 .stock(30)
-                .price(38_000.0)
+                .price(new BigDecimal(38000))
                 .materialEnums(Set.of(MaterialEnum.SOY_WAX))
                 .featureEnums(Set.of(FeatureEnum.SCENTED))
                 .categories(Set.of(CategoryEnum.AROMATIC))
@@ -89,7 +90,7 @@ public class DataInitializer {
                 .description("Fresh citrus blend to energize your mornings.")
                 .principalImage("citrus-main.jpg")
                 .stock(45)
-                .price(30_000.0)
+                .price(new BigDecimal(30000))
                 .materialEnums(Set.of(MaterialEnum.SOY_WAX))
                 .featureEnums(Set.of(FeatureEnum.SCENTED))
                 .categories(Set.of(CategoryEnum.DECORATIVE))
@@ -101,7 +102,7 @@ public class DataInitializer {
                 .description("Clean marine scent inspired by coastal winds.")
                 .principalImage("ocean-main.jpg")
                 .stock(35)
-                .price(34_000.0)
+                .price(new BigDecimal(34000))
                 .materialEnums(Set.of(MaterialEnum.BEESWAX))
                 .featureEnums(Set.of(FeatureEnum.SCENTED))
                 .categories(Set.of(CategoryEnum.ROMANTIC))
@@ -113,7 +114,7 @@ public class DataInitializer {
                 .description("Warm spicy aroma perfect for cozy evenings.")
                 .principalImage("cinnamon-main.jpg")
                 .stock(25)
-                .price(36_000.0)
+                .price(new BigDecimal(36000))
                 .materialEnums(Set.of(MaterialEnum.SOY_WAX))
                 .featureEnums(Set.of(FeatureEnum.HANDMADE))
                 .categories(Set.of(CategoryEnum.DECORATIVE))
@@ -125,7 +126,7 @@ public class DataInitializer {
                 .description("Soft floral scent for romantic atmospheres.")
                 .principalImage("rose-main.jpg")
                 .stock(28)
-                .price(37_000.0)
+                .price(new BigDecimal(37000))
                 .materialEnums(Set.of(MaterialEnum.BEESWAX))
                 .featureEnums(Set.of(FeatureEnum.HANDMADE))
                 .categories(Set.of(CategoryEnum.RELIGIOUS))
@@ -137,7 +138,7 @@ public class DataInitializer {
                 .description("Rich roasted coffee scent for focus and comfort.")
                 .principalImage("coffee-main.jpg")
                 .stock(50)
-                .price(33_000.0)
+                .price(new BigDecimal(33000))
                 .materialEnums(Set.of(MaterialEnum.SOY_WAX))
                 .featureEnums(Set.of(FeatureEnum.SCENTED))
                 .categories(Set.of(CategoryEnum.DECORATIVE))

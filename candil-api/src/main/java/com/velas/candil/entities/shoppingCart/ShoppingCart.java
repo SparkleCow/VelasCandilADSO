@@ -1,6 +1,5 @@
 package com.velas.candil.entities.shoppingCart;
 
-import com.velas.candil.entities.candle.Candle;
 import com.velas.candil.entities.cartItem.CartItem;
 import com.velas.candil.entities.user.User;
 import jakarta.persistence.*;
