@@ -56,9 +56,11 @@ public class ShoppingCartServiceImp implements ShoppingCartService{
         Candle candle = candleRepository.findById(candleId).orElseThrow(() ->  new RuntimeException("Candle not found"));
         CartItem cartItem = new CartItem();
         cartItem.setCandle(candle);
-        cartItem.setShoppingCart(shoppingCart);
         cartItem.setQuantity(1);
         cartItem.setPriceSnapshot(candle.getPrice());
+        cartItem.recalculateSubtotal();
+
+        shoppingCart.addItem(cartItem);
 
         return shoppingCartMapper.toDto(shoppingCartRepository.save(shoppingCart));
     }
@@ -76,7 +78,7 @@ public class ShoppingCartServiceImp implements ShoppingCartService{
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Shopping cart item not found"));
 
-        shoppingCart.getCartItems().remove(cartItem);
+        shoppingCart.removeItem(cartItem);
         return shoppingCartMapper.toDto(shoppingCartRepository.save(shoppingCart));
     }
 
@@ -98,13 +100,16 @@ public class ShoppingCartServiceImp implements ShoppingCartService{
             Candle candle = candleRepository.findById(candleId)
                     .orElseThrow(() -> new RuntimeException("Candle not found"));
 
-            CartItem newItem = new CartItem();
-            newItem.setCandle(candle);
-            newItem.setQuantity(1);
-            newItem.setShoppingCart(cart);
+            CartItem cartItem = new CartItem();
+            cartItem.setCandle(candle);
+            cartItem.setQuantity(1);
+            cartItem.setPriceSnapshot(candle.getPrice());
+            cartItem.recalculateSubtotal();
 
-            cart.getCartItems().add(newItem);
+            cart.addItem(cartItem);
         }
+
+        cart.recalculateSubTotal();
 
         return shoppingCartMapper.toDto(shoppingCartRepository.save(cart));
     }
@@ -114,10 +119,10 @@ public class ShoppingCartServiceImp implements ShoppingCartService{
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        ShoppingCart shoppingCart = shoppingCartRepository.findByUser(user)
+        ShoppingCart cart = shoppingCartRepository.findByUser(user)
                 .orElseThrow(() -> new RuntimeException("Shopping cart not found"));
 
-        CartItem cartItem = shoppingCart.getCartItems().stream()
+        CartItem cartItem = cart.getCartItems().stream()
                 .filter(x -> Objects.equals(x.getCandle().getId(), candleId))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Shopping cart item not found"));
@@ -125,10 +130,12 @@ public class ShoppingCartServiceImp implements ShoppingCartService{
         if (cartItem.getQuantity() > 1) {
             cartItem.decreaseQuantity(1);
         } else {
-            shoppingCart.getCartItems().remove(cartItem);
+            cart.removeItem(cartItem);
         }
 
-        return shoppingCartMapper.toDto(shoppingCartRepository.save(shoppingCart));
+        cart.recalculateSubTotal();
+
+        return shoppingCartMapper.toDto(shoppingCartRepository.save(cart));
     }
 
     @Override
@@ -136,11 +143,13 @@ public class ShoppingCartServiceImp implements ShoppingCartService{
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        ShoppingCart shoppingCart = shoppingCartRepository.findByUser(user)
+        ShoppingCart cart = shoppingCartRepository.findByUser(user)
                 .orElseThrow(() -> new RuntimeException("Shopping cart not found"));
 
-        shoppingCart.getCartItems().clear();
-        return shoppingCartMapper.toDto(shoppingCartRepository.save(shoppingCart));
+        cart.getCartItems().clear();
+        cart.recalculateSubTotal();
+
+        return shoppingCartMapper.toDto(shoppingCartRepository.save(cart));
     }
 
     @Override

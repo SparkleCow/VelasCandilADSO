@@ -30,8 +30,8 @@ public interface IngredientMapper {
 
         // If name changed, update dependent fields
         if (entity.getName() != null) {
-            entity.setIngredientType(entity.getName().type);
-            entity.setPricePerUnit(entity.getName().pricePerUnit);
+            entity.setIngredientType(entity.getName().getType());
+            entity.setPricePerUnit(entity.getName().getPricePerUnit());
         }
 
         // Recalculate total price
