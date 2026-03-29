@@ -1,29 +1,29 @@
-<mat-toolbar color="primary" class="navbar">
+<mat-toolbar class="navbar">
 
-  <!-- Logo -->
-  <a mat-button routerLink="/candles" class="brand">
+  <a mat-button routerLink="/home" class="brand">
     <mat-icon>local_fire_department</mat-icon>
     <span>Velas Candil</span>
   </a>
 
   <span class="spacer"></span>
 
-  <!-- Navegación principal -->
   <nav class="nav-links">
     <a mat-button routerLink="/candles" routerLinkActive="link-active"
       [routerLinkActiveOptions]="{ exact: true }">
       Catálogo
     </a>
-
     @if (user.isAdmin()) {
       <a mat-button routerLink="/admin/candles" routerLinkActive="link-active">
-        Gestión velas
-      </a>
-      <a mat-button routerLink="/admin/ingredients" routerLinkActive="link-active">
-        Ingredientes
+        Admin
       </a>
     }
   </nav>
+
+  <!-- Toggle tema -->
+  <button mat-icon-button (click)="toggleTheme()"
+    [matTooltip]="isDark() ? 'Modo claro' : 'Modo oscuro'">
+    <mat-icon>{{ isDark() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+  </button>
 
   <!-- Menú usuario -->
   <button mat-icon-button [matMenuTriggerFor]="menuUsuario">

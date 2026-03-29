@@ -1,7 +1,7 @@
 .navbar {
-  background: #fff !important;
-  color: #2c2c2c !important;
-  border-bottom: 1px solid #e0e0e0;
+  background: var(--mat-sys-surface) !important;
+  color: var(--mat-sys-on-surface) !important;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
   box-shadow: none !important;
   padding: 0 32px;
   height: 64px;
@@ -13,7 +13,7 @@
   gap: 8px;
   font-size: 1rem;
   font-weight: 400;
-  color: #2c2c2c;
+  color: var(--mat-sys-on-surface);
   text-decoration: none;
   letter-spacing: 0.3px;
 }
@@ -30,7 +30,7 @@
 }
 
 .nav-links a {
-  color: #2c2c2c !important;
+  color: var(--mat-sys-on-surface) !important;
   font-size: 0.82rem;
   font-weight: 400;
   letter-spacing: 1px;
@@ -48,7 +48,7 @@
 
 .menu-header {
   padding: 10px 16px 6px;
-  border-bottom: 1px solid rgba(0,0,0,0.08);
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
   pointer-events: none;
 }
 
@@ -56,7 +56,7 @@
   margin: 0;
   font-weight: 500;
   font-size: 0.9rem;
-  color: #2c2c2c;
+  color: var(--mat-sys-on-surface);
 }
 
 .badge-admin {
