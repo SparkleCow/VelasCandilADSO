@@ -3,10 +3,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #fff;
+  background: var(--mat-sys-surface);
   text-align: center;
   padding: 60px 24px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
 }
 
 .hero-content {
@@ -18,13 +18,13 @@
   font-weight: 300;
   line-height: 1.2;
   margin: 0 0 20px;
-  color: #1a1a1a;
+  color: var(--mat-sys-on-surface);
   letter-spacing: -0.5px;
 }
 
 .hero-subtitle {
   font-size: 1rem;
-  color: #666;
+  color: var(--mat-sys-on-surface-variant);
   line-height: 1.8;
   margin: 0 0 36px;
   font-weight: 300;
@@ -57,20 +57,21 @@
   margin: 0 auto;
   padding: 80px 24px;
   gap: 40px;
+  background: var(--mat-sys-surface);
 }
 
 .feature-card {
   text-align: center;
   padding: 40px 24px;
-  border: 1px solid #ebebeb;
+  border: 1px solid var(--mat-sys-outline-variant);
   border-radius: 4px;
-  background: #fff;
+  background: var(--mat-sys-surface-container);
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .feature-card:hover {
-  border-color: #ccc;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  border-color: var(--mat-sys-outline);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
 }
 
 .feature-icon {
@@ -85,14 +86,14 @@
   font-size: 1rem;
   font-weight: 500;
   margin: 0 0 12px;
-  color: #1a1a1a;
+  color: var(--mat-sys-on-surface);
   text-transform: uppercase;
   letter-spacing: 0.8px;
 }
 
 .feature-card p {
   font-size: 0.88rem;
-  color: #888;
+  color: var(--mat-sys-on-surface-variant);
   line-height: 1.7;
   margin: 0;
   font-weight: 300;

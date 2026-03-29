@@ -1,0 +1,112 @@
+<app-navbar></app-navbar>
+
+<div class="page-container">
+
+  @if (loading()) {
+    <div class="spinner-wrap">
+      <mat-spinner diameter="48"></mat-spinner>
+    </div>
+  }
+
+  @if (!loading() && candle()) {
+    <div class="detail-layout">
+
+      <!-- Galería izquierda -->
+      <div class="gallery">
+        <div class="main-image">
+          @if (selectedImage()) {
+            <img [src]="selectedImage()!" [alt]="candle()!.name">
+          } @else {
+            <div class="no-image">
+              <mat-icon>local_fire_department</mat-icon>
+            </div>
+          }
+        </div>
+
+        @if (getAllImages().length > 1) {
+          <div class="thumbnails">
+            @for (img of getAllImages(); track img) {
+              <button class="thumb" [class.active]="selectedImage() === img"
+                (click)="selectImage(img)">
+                <img [src]="img" alt="imagen">
+              </button>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Info derecha -->
+      <div class="info">
+
+        <a mat-button routerLink="/candles" class="back-link">
+          <mat-icon>arrow_back</mat-icon> Volver al catálogo
+        </a>
+
+        <h1 class="candle-name">{{ candle()!.name }}</h1>
+
+        <p class="price">${{ candle()!.price | number:'1.0-0' }}</p>
+
+        <p class="description">{{ candle()!.description }}</p>
+
+        <div class="divider"></div>
+
+        <div class="meta-row">
+          <span class="meta-label">Stock</span>
+          <span class="meta-value" [class.out]="candle()!.stock === 0">
+            {{ candle()!.stock > 0 ? candle()!.stock + ' disponibles' : 'Sin stock' }}
+          </span>
+        </div>
+
+        <div class="meta-row">
+          <span class="meta-label">Categorías</span>
+          <div class="tags">
+            @for (c of candle()!.categories; track c) {
+              <span class="tag tag-category">{{ formatLabel(c) }}</span>
+            }
+          </div>
+        </div>
+
+        <div class="meta-row">
+          <span class="meta-label">Material</span>
+          <div class="tags">
+            @for (m of candle()!.materialEnums; track m) {
+              <span class="tag tag-material">{{ formatLabel(m) }}</span>
+            }
+          </div>
+        </div>
+
+        <div class="meta-row">
+          <span class="meta-label">Características</span>
+          <div class="tags">
+            @for (f of candle()!.featureEnums; track f) {
+              <span class="tag tag-feature">{{ formatLabel(f) }}</span>
+            }
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="actions">
+          <button mat-raised-button class="btn-cart"
+            [disabled]="candle()!.stock === 0 || addingToCart()"
+            (click)="addToCart()">
+            @if (addingToCart()) {
+              <mat-spinner diameter="20" color="accent"></mat-spinner>
+            } @else {
+              <ng-container>
+                <mat-icon>shopping_cart</mat-icon>
+                Agregar al carrito
+              </ng-container>
+            }
+          </button>
+
+          <a mat-stroked-button routerLink="/candles" class="btn-back">
+            Regresar
+          </a>
+        </div>
+
+      </div>
+    </div>
+  }
+
+</div>

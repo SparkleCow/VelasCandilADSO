@@ -1,0 +1,228 @@
+.page-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 32px 80px;
+}
+
+.spinner-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 80px 0;
+}
+
+/* ── Layout ── */
+.detail-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .detail-layout { grid-template-columns: 1fr; gap: 32px; }
+}
+
+/* ── Galería ── */
+.gallery {
+  position: sticky;
+  top: 88px;
+}
+
+.main-image {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--mat-sys-surface-container);
+  border: 1px solid var(--mat-sys-outline-variant);
+}
+
+.main-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.no-image {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--mat-sys-surface-container-high);
+}
+
+.no-image mat-icon {
+  font-size: 80px;
+  width: 80px;
+  height: 80px;
+  color: var(--mat-sys-outline);
+}
+
+.thumbnails {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.thumb {
+  width: 68px;
+  height: 68px;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid var(--mat-sys-outline-variant);
+  cursor: pointer;
+  padding: 0;
+  background: none;
+  transition: border-color 0.2s;
+}
+
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumb.active {
+  border: 2px solid #2e7d32;
+}
+
+/* ── Info ── */
+.back-link {
+  color: var(--mat-sys-on-surface-variant) !important;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+  padding-left: 0 !important;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.candle-name {
+  font-size: 1.8rem;
+  font-weight: 300;
+  margin: 0 0 12px;
+  color: var(--mat-sys-on-surface);
+  letter-spacing: -0.3px;
+}
+
+.price {
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: var(--mat-sys-on-surface);
+  margin: 0 0 20px;
+}
+
+.description {
+  font-size: 0.9rem;
+  color: var(--mat-sys-on-surface-variant);
+  line-height: 1.8;
+  margin: 0 0 24px;
+  font-weight: 300;
+}
+
+.divider {
+  border-top: 1px solid var(--mat-sys-outline-variant);
+  margin: 20px 0;
+}
+
+/* ── Meta ── */
+.meta-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.meta-label {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--mat-sys-on-surface-variant);
+  min-width: 100px;
+  padding-top: 3px;
+}
+
+.meta-value {
+  font-size: 0.9rem;
+  color: #2e7d32;
+  font-weight: 500;
+}
+
+.meta-value.out {
+  color: var(--mat-sys-error);
+}
+
+/* ── Tags ── */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag {
+  font-size: 0.7rem;
+  padding: 3px 10px;
+  border-radius: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 400;
+}
+
+.tag-category {
+  background: color-mix(in srgb, #2e7d32 15%, transparent);
+  color: #2e7d32;
+  border: 1px solid color-mix(in srgb, #2e7d32 30%, transparent);
+}
+
+.tag-material {
+  background: var(--mat-sys-surface-container-high);
+  color: var(--mat-sys-on-surface-variant);
+  border: 1px solid var(--mat-sys-outline-variant);
+}
+
+.tag-feature {
+  background: color-mix(in srgb, #880e4f 15%, transparent);
+  color: #c2185b;
+  border: 1px solid color-mix(in srgb, #880e4f 30%, transparent);
+}
+
+/* ── Acciones ── */
+.actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.btn-cart {
+  background-color: #2e7d32 !important;
+  color: #fff !important;
+  height: 46px;
+  padding: 0 28px;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 200px;
+  justify-content: center;
+}
+
+.btn-cart:disabled {
+  background-color: var(--mat-sys-surface-container-high) !important;
+  color: var(--mat-sys-on-surface-variant) !important;
+}
+
+.btn-back {
+  height: 46px;
+  padding: 0 24px;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  border-radius: 4px !important;
+  color: var(--mat-sys-on-surface-variant) !important;
+  border-color: var(--mat-sys-outline-variant) !important;
+}
