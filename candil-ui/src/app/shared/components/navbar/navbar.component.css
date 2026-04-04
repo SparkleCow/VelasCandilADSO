@@ -1,71 +1,157 @@
-.navbar {
-  background: var(--mat-sys-surface) !important;
-  color: var(--mat-sys-on-surface) !important;
-  border-bottom: 1px solid var(--mat-sys-outline-variant);
-  box-shadow: none !important;
-  padding: 0 32px;
-  height: 64px;
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(255, 255, 255);
 }
 
-.brand {
+.main-container {
+  width: 100%;
+}
+
+.header-container {
+  width: 80%;
+  padding: 0 10px;
+  color: rgb(0, 0, 0);
+}
+
+.header-container__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #000000;
+}
+
+.header-container__title {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 1rem;
-  font-weight: 400;
-  color: var(--mat-sys-on-surface);
-  text-decoration: none;
-  letter-spacing: 0.3px;
+  cursor: pointer;
+  font-family: "Playwrite NZ", cursive;
+  font-weight: lighter;
 }
 
-.brand mat-icon {
-  color: #2e7d32;
+.header-container__title h3 {
+  opacity: 0.7;
+  transition: all 0.2s ease;
+  position: relative;
+  display: inline-block;
 }
 
-.spacer { flex: 1 1 auto; }
+.header-container__title h3::after {
+  content: "local_fire_department";
+  font-family: "Material Icons";
+  position: absolute;
+  right: -28px;
+  top: 50%;
+  transform: translateY(-50%) scale(0.8);
+  opacity: 0;
+  transition: all 0.3s ease;
+  font-size: 20px;
+}
 
-.nav-links {
+.header-container__title h3:hover {
+  transform: rotate(5deg) scale(1.05);
+}
+
+.header-container__title h3:hover::after {
+  opacity: 1;
+  transform: translateY(-50%) scale(1.1);
+  color: #fcac44;
+}
+
+.header-container__auth {
   display: flex;
-  gap: 8px;
+  align-items: center;
+  gap: 1rem;
 }
 
-.nav-links a {
-  color: var(--mat-sys-on-surface) !important;
-  font-size: 0.82rem;
-  font-weight: 400;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+.header-container__link {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: #000;
+  font-size: 0.95rem;
+  opacity: 0.8;
+  transition: all 0.2s ease;
 }
 
-.nav-links a:hover {
-  color: #2e7d32 !important;
+.header-container__link mat-icon {
+  font-size: 18px;
 }
 
-.link-active {
-  color: #2e7d32 !important;
-  font-weight: 500 !important;
+.header-container__link:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
 }
 
-.menu-header {
+.header-container__profile-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: rgb(0, 0, 0);
+}
+
+.header-container__profile-btn mat-icon {
+  font-size: 26px;
+  transition: opacity 0.2s ease;
+}
+
+.header-container__profile-btn:hover mat-icon {
+  opacity: 0.7;
+}
+
+.header-container__menu-header {
   padding: 10px 16px 6px;
-  border-bottom: 1px solid var(--mat-sys-outline-variant);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   pointer-events: none;
 }
 
-.menu-username {
+.header-container__username {
   margin: 0;
   font-weight: 500;
   font-size: 0.9rem;
-  color: var(--mat-sys-on-surface);
 }
 
-.badge-admin {
+.header-container__badge {
   display: inline-block;
   margin-top: 4px;
-  padding: 1px 8px;
+  padding: 2px 8px;
   border-radius: 10px;
   background: #2e7d32;
-  color: #fff;
-  font-size: 0.72rem;
+  color: #000000;
+  font-size: 0.7rem;
   font-weight: 500;
+}
+
+.header-container__navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+}
+
+.header-container__logo img {
+  height: 70px;
+  object-fit: contain;
+  flex-grow: 1;
+  transition: filter 0.3s ease;
+}
+
+.header-container__logo img:hover {
+  filter: hue-rotate(90deg) saturate(1.5);
+  filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.3));
+}
+
+.header-container__menu {
+  display: flex;
+  align-items: center;
+  flex-grow: 2;
+  justify-content: end;
+  gap: 5rem;
 }

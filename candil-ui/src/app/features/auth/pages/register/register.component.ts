@@ -22,13 +22,12 @@ import { MatIconModule } from '@angular/material/icon';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
   ],
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
-
   private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
@@ -38,39 +37,40 @@ export class RegisterComponent {
   form = this.fb.nonNullable.group({
     firstName: this.fb.nonNullable.control('', [
       Validators.required,
-      Validators.maxLength(100)
+      Validators.maxLength(100),
     ]),
     lastName: this.fb.nonNullable.control('', [
       Validators.required,
-      Validators.maxLength(100)
+      Validators.maxLength(100),
     ]),
     username: this.fb.nonNullable.control('', [
       Validators.required,
-      Validators.minLength(4)
+      Validators.minLength(4),
     ]),
     email: this.fb.nonNullable.control('', [
       Validators.required,
-      Validators.email
+      Validators.maxLength(100),
+      Validators.email,
     ]),
     password: this.fb.nonNullable.control('', [
       Validators.required,
-      Validators.minLength(8)
+      Validators.minLength(8),
+      Validators.maxLength(50),
     ]),
   });
 
   submit(): void {
     if (this.form.invalid) return;
 
-    this.authService.register(this.form.getRawValue())
-      .subscribe({
-        next: () => {
-          alert('Revisa tu correo para activar tu cuenta');
-          this.router.navigate(['/login']);
-        },
-        error: (err) => {
-          console.error(err);
-          alert('Error al registrar usuario');
-        }
-      });
+    this.authService.register(this.form.getRawValue()).subscribe({
+      next: () => {
+        alert('Revisa tu correo para activar tu cuenta');
+        this.router.navigate(['/activate-account']);
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Error al registrar usuario');
+      },
+    });
   }
 }
