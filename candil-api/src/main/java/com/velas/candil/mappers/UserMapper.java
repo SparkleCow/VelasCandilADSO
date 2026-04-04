@@ -20,5 +20,6 @@ public interface UserMapper {
     @Mapping(target = "enabled", constant = "true")
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "imageUrl", ignore = true)
     User toEntity(AuthRegisterDto dto);
 }

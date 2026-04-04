@@ -9,6 +9,7 @@ import com.velas.candil.models.user.AuthRegisterDto;
 import com.velas.candil.models.user.AuthResponseDto;
 import com.velas.candil.models.EmailTemplate;
 import com.velas.candil.models.user.RoleEnum;
+import com.velas.candil.models.user.UserInformationDto;
 import com.velas.candil.repositories.ActivateTokenRepository;
 import com.velas.candil.repositories.RoleRepository;
 import com.velas.candil.repositories.UserRepository;
@@ -66,6 +67,11 @@ public class AuthenticationServiceImp implements AuthenticationService {
         user.getRoles().add(userRole);
         User userSaved = userRepository.save(user);
         sendValidationEmail(userSaved);
+    }
+
+    @Override
+    public UserInformationDto userInformation(User user) {
+        return new UserInformationDto(user.getUsername(), user.getImageUrl());
     }
 
     @Override
