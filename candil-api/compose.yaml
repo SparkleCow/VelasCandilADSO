@@ -1,12 +1,14 @@
 services:
   postgres:
     image: 'postgres:latest'
+    container_name: candil-postgres
     environment:
       - 'POSTGRES_DB=candles'
       - 'POSTGRES_PASSWORD=123456789'
       - 'POSTGRES_USER=postgres'
     ports:
       - "5432:5432"
+    restart: always         
     networks:
       - candle
 
@@ -15,8 +17,8 @@ services:
     container_name: maildev
     ports:
       - "1080:1080"
-      - "1025:1025"  
-    restart: unless-stopped
+      - "1025:1025"
+    restart: no
     networks:
       - candle
 
