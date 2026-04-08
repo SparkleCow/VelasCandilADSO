@@ -5,6 +5,6 @@ import com.velas.candil.exceptions.BusinessException;
 
 public class AccountDisabledException extends BusinessException {
     public AccountDisabledException(String message) {
-        super(BusinessErrorCode.ACCOUNT_DISABLED);
+        super(BusinessErrorCode.ACCOUNT_DISABLED, message);
     }
 }

@@ -5,6 +5,6 @@ import com.velas.candil.exceptions.BusinessException;
 
 public class AccountLockedException extends BusinessException {
     public AccountLockedException(String message) {
-        super(BusinessErrorCode.ACCOUNT_LOCKED);
+        super(BusinessErrorCode.ACCOUNT_LOCKED, message);
     }
 }

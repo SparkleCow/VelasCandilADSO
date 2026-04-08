@@ -5,6 +5,6 @@ import com.velas.candil.exceptions.BusinessException;
 
 public class CandleNotFoundException extends BusinessException {
     public CandleNotFoundException(String message) {
-        super(BusinessErrorCode.CANDLE_NOT_FOUND);
+        super(BusinessErrorCode.CANDLE_NOT_FOUND, message);
     }
 }

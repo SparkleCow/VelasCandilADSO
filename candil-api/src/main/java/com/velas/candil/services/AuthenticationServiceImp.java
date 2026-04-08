@@ -4,6 +4,9 @@ import com.velas.candil.config.jwt.JwtUtils;
 import com.velas.candil.entities.user.ActivateToken;
 import com.velas.candil.entities.user.Role;
 import com.velas.candil.entities.user.User;
+import com.velas.candil.exceptions.infra.MessagingErrorException;
+import com.velas.candil.exceptions.roles.RoleNotFoundException;
+import com.velas.candil.exceptions.users.*;
 import com.velas.candil.mappers.UserMapper;
 import com.velas.candil.models.user.AuthRegisterDto;
 import com.velas.candil.models.user.AuthResponseDto;
@@ -17,8 +20,7 @@ import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -50,9 +52,23 @@ public class AuthenticationServiceImp implements AuthenticationService {
     @Override
     public AuthResponseDto login(String username, String password) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
-        Authentication authentication = authenticationManager.authenticate(authenticationToken);
+        Authentication authentication = null;
+        try {
+            authentication = authenticationManager.authenticate(authenticationToken);
+            log.info("User logged in successfully: {}", username);
+        } catch (BadCredentialsException e) {
+            log.warn("Invalid credentials for user: {}", username);
+            throw new InvalidCredentialsException("Invalid credentials " +e.getMessage());
+        } catch (DisabledException e) {
+            log.warn("Disabled account login attempt: {}", username);
+            throw new AccountDisabledException("Account disabled " +e.getMessage());
+        } catch (LockedException e) {
+            log.warn("Locked account login attempt: {}", username);
+            throw new AccountLockedException("Account locked " +e.getMessage());
+        }
         User  user = (User) authentication.getPrincipal();
         String token = jwtUtils.generateToken(user);
+        log.info("User logged in: {}", username);
         return new AuthResponseDto(token);
     }
 
@@ -62,11 +78,17 @@ public class AuthenticationServiceImp implements AuthenticationService {
         user.setPassword(passwordEncoder.encode(dto.password()));
 
         Role userRole = roleRepository.findByRole(RoleEnum.USER)
-                .orElseThrow(() -> new RuntimeException("Role not found"));
+                .orElseThrow(() -> new RoleNotFoundException("Role with name "+ RoleEnum.USER +" not found"));
 
         user.getRoles().add(userRole);
         User userSaved = userRepository.save(user);
-        sendValidationEmail(userSaved);
+        try {
+            sendValidationEmail(userSaved);
+        } catch (MessagingException e) {
+            log.error("Error sending validation email to user: {}", userSaved.getEmail(), e);
+            throw new MessagingErrorException("Error sending validation email" + e.getMessage());
+        }
+        log.info("User registered with username: {}", user.getUsername());
     }
 
     @Override
@@ -109,10 +131,12 @@ public class AuthenticationServiceImp implements AuthenticationService {
 
     @Override
     public void activateAccount(String token) throws MessagingException {
-        ActivateToken tokenResult = tokenRepository.findByToken(token).orElseThrow(RuntimeException::new);
+        ActivateToken tokenResult = tokenRepository.findByToken(token).orElseThrow(() ->
+                new TokenInvalidException("Token not valid. Make sure that's the token sent to your account."));
+
         if(LocalDateTime.now().isAfter(tokenResult.getExpiredAt())){
             sendValidationEmail(tokenResult.getUser());
-            throw new RuntimeException("Activation token has expired or is invalid");
+            throw new TokenExpiredException("Activation token has expired. We have sent another one to your email.");
         }
         User user = tokenResult.getUser();
         user.setEnabled(true);

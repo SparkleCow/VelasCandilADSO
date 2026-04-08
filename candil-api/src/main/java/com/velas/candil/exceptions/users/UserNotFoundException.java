@@ -6,6 +6,6 @@ import com.velas.candil.exceptions.BusinessException;
 public class UserNotFoundException extends BusinessException {
 
     public UserNotFoundException(String message) {
-        super(BusinessErrorCode.USER_NOT_FOUND);
+        super(BusinessErrorCode.USER_NOT_FOUND, message);
     }
 }

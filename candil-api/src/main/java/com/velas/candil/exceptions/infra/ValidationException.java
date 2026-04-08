@@ -5,6 +5,6 @@ import com.velas.candil.exceptions.BusinessException;
 
 public class ValidationException extends BusinessException {
     public ValidationException(String message) {
-        super(BusinessErrorCode.VALIDATION_ERROR);
+        super(BusinessErrorCode.VALIDATION_ERROR, message);
     }
 }

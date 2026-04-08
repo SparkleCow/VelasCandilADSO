@@ -5,6 +5,6 @@ import com.velas.candil.exceptions.BusinessException;
 
 public class TokenInvalidException extends BusinessException {
     public TokenInvalidException(String message) {
-        super(BusinessErrorCode.TOKEN_INVALID);
+        super(BusinessErrorCode.TOKEN_INVALID, message);
     }
 }

@@ -1,5 +1,6 @@
 package com.velas.candil.config.jwt;
 
+import com.velas.candil.exceptions.users.UserNotFoundException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -47,8 +48,14 @@ public class JwtFilter extends OncePerRequestFilter {
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            UserDetails user = userDetailsService.loadUserByUsername(username);
-            //TODO Exceptions
+            UserDetails user = null;
+
+            try {
+                user = userDetailsService.loadUserByUsername(username);
+            } catch (UserNotFoundException e) {
+                filterChain.doFilter(request, response);
+                return;
+            }
 
             if (jwtUtils.validateToken(token, user)) {
 

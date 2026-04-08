@@ -24,7 +24,7 @@ public class ControllerAdvice {
                 .timestamp(LocalDateTime.now())
                 .status(error.getHttpStatus().value())
                 .error(error.getHttpStatus().getReasonPhrase())
-                .message(error.getMessage())
+                .message(ex.getMessage() != null ? ex.getMessage() : error.getMessage())
                 .code(error.name())
                 .path(request.getRequestURI())
                 .details(null)

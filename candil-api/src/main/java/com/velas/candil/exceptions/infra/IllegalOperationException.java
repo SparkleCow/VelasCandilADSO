@@ -5,6 +5,6 @@ import com.velas.candil.exceptions.BusinessException;
 
 public class IllegalOperationException extends BusinessException {
     public IllegalOperationException(String message) {
-        super(BusinessErrorCode.ILLEGAL_OPERATION);
+        super(BusinessErrorCode.ILLEGAL_OPERATION, message);
     }
 }

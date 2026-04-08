@@ -5,6 +5,6 @@ import com.velas.candil.exceptions.BusinessException;
 
 public class TokenExpiredException extends BusinessException {
     public TokenExpiredException(String message) {
-        super(BusinessErrorCode.TOKEN_EXPIRED);
+        super(BusinessErrorCode.TOKEN_EXPIRED, message);
     }
 }

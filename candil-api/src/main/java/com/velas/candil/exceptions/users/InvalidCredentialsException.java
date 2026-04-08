@@ -5,6 +5,6 @@ import com.velas.candil.exceptions.BusinessException;
 
 public class InvalidCredentialsException extends BusinessException {
     public InvalidCredentialsException(String message) {
-        super(BusinessErrorCode.INVALID_CREDENTIALS);
+        super(BusinessErrorCode.INVALID_CREDENTIALS, message);
     }
 }
