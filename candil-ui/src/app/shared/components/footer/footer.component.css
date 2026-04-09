@@ -1,0 +1,117 @@
+:host {
+  background-color: rgb(245, 245, 245);
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+/* ── Cards ── */
+.features-section {
+  background: rgb(245, 245, 245);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 80px 24px;
+  gap: 40px;
+}
+
+.feature-card {
+  text-align: center;
+  padding: 40px 24px;
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 4px;
+  background: var(--mat-sys-surface-container);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.feature-card:hover {
+  border-color: var(--mat-sys-outline);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon {
+  font-size: 36px;
+  width: 36px;
+  height: 36px;
+  color: #2e7d32;
+  margin-bottom: 20px;
+}
+
+.feature-card h3 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0 0 12px;
+  color: var(--mat-sys-on-surface);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.feature-card p {
+  font-size: 0.88rem;
+  color: var(--mat-sys-on-surface-variant);
+  line-height: 1.7;
+  margin: 0;
+  font-weight: 300;
+}
+/* ── Footer info ── */
+.info-footer {
+  background: rgb(245, 245, 245);
+  border-top: 1px solid var(--mat-sys-outline-variant);
+  margin-top: 40px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 60px 24px 40px;
+  gap: 40px;
+}
+
+.footer-column h3 {
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 16px;
+  color: black;
+}
+
+.footer-column p {
+  font-size: 0.85rem;
+  color: black;
+  line-height: 1.6;
+  margin: 6px 0;
+  font-weight: 300;
+}
+
+/* Línea inferior */
+.footer-bottom {
+  border-top: 1px solid var(--mat-sys-outline-variant);
+  text-align: center;
+  padding: 16px;
+}
+
+.footer-bottom p {
+  font-size: 0.75rem;
+  color: black;
+  margin: 0;
+}
+
+/* Responsive ajuste */
+@media (max-width: 600px) {
+  .footer-grid {
+    padding: 40px 20px;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+}

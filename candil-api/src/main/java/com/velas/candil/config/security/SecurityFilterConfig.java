@@ -40,7 +40,8 @@ public class SecurityFilterConfig {
                                         "/swagger-ui/**",
                                         "/v3/api-docs/**",
                                         "/swagger-ui.html",
-                                        "/v1/auth/**")
+                                        "/v1/auth/**",
+                                        "/images/**")
                                 .permitAll()
                                 //Candles
                                 .requestMatchers(HttpMethod.GET, "/v1/candles/category/",

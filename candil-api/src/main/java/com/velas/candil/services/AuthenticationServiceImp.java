@@ -20,6 +20,7 @@ import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -28,6 +29,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -74,6 +76,12 @@ public class AuthenticationServiceImp implements AuthenticationService {
 
     @Override
     public void register(AuthRegisterDto dto) throws MessagingException {
+
+        Optional<User> userOptional = userRepository.findByUsername(dto.username());
+        if(userOptional.isPresent()){
+            throw new UsernameAlreadyExistsException("Username "+dto.username()+" already exists. Try with another one.");
+        }
+
         User user = userMapper.toEntity(dto);
         user.setPassword(passwordEncoder.encode(dto.password()));
 
@@ -81,7 +89,14 @@ public class AuthenticationServiceImp implements AuthenticationService {
                 .orElseThrow(() -> new RoleNotFoundException("Role with name "+ RoleEnum.USER +" not found"));
 
         user.getRoles().add(userRole);
-        User userSaved = userRepository.save(user);
+        User userSaved;
+        try {
+            userSaved = userRepository.save(user);
+        }catch (DataIntegrityViolationException ex) {
+            // concurrent fallback
+            throw new UsernameAlreadyExistsException("Username already exists");
+        }
+
         try {
             sendValidationEmail(userSaved);
         } catch (MessagingException e) {

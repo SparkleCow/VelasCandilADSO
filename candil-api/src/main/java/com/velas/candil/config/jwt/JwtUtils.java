@@ -50,7 +50,9 @@ public class JwtUtils {
         return token;
     }
 
-    public boolean validateToken(Claims claims, UserDetails userDetails) {
+    public boolean validateToken(String token, UserDetails userDetails) {
+
+        Claims claims = extractAllClaims(token);
         String username = claims.getSubject();
 
         if (username == null) {

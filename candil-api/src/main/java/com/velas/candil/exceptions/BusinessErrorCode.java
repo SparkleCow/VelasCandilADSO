@@ -14,6 +14,7 @@ public enum BusinessErrorCode {
     TOKEN_EXPIRED(401, HttpStatus.UNAUTHORIZED, "Token expired"),
     TOKEN_INVALID(401, HttpStatus.UNAUTHORIZED, "Invalid token"),
     ROLE_NOT_FOUND(404, HttpStatus.NOT_FOUND, "Role not found"),
+    USER_ALREADY_EXIST(400, HttpStatus.BAD_REQUEST, "User already exist"),
 
     // CANDLES
     CANDLE_NOT_FOUND(404, HttpStatus.NOT_FOUND, "Candle not found"),

@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
+  selector: 'app-footer',
   imports: [RouterModule, MatButtonModule, MatIconModule],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css',
+  templateUrl: './footer.component.html',
+  styleUrl: './footer.component.css',
 })
-export class HomeComponent {}
+export class FooterComponent {}
