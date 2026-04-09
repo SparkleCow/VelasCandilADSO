@@ -1,14 +1,18 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { AuthLoginDto, AuthRegisterDto, AuthResponseDto } from '../../shared/models/auth.models';
+import {
+  AuthLoginDto,
+  AuthRegisterDto,
+  AuthResponseDto,
+} from '../../shared/models/auth.models';
 import { TokenService } from './token.service';
+import { UserInformation } from '../../shared/models/user-information.models';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
   private readonly http = inject(HttpClient);
   private readonly tokenService = inject(TokenService);
   private readonly baseUrl = 'http://localhost:8080/v1/auth';
@@ -18,19 +22,19 @@ export class AuthService {
   }
 
   login(data: AuthLoginDto): Observable<AuthResponseDto> {
-    return this.http.post<AuthResponseDto>(`${this.baseUrl}/login`, data)
-      .pipe(
-        tap(response => {
-          this.tokenService.set(response.jwt);
-        })
-      );
+    return this.http.post<AuthResponseDto>(`${this.baseUrl}/login`, data).pipe(
+      tap((response) => {
+        this.tokenService.set(response.jwt);
+      }),
+    );
   }
 
   activate(token: string): Observable<void> {
-    return this.http.post<void>(
-      `${this.baseUrl}/activate?token=${token}`,
-      {}
-    );
+    return this.http.post<void>(`${this.baseUrl}/activate?token=${token}`, {});
+  }
+
+  getUserInformation(): Observable<UserInformation> {
+    return this.http.get<UserInformation>(`${this.baseUrl}/me`);
   }
 
   logout(): void {

@@ -1,46 +1,71 @@
-<mat-toolbar class="navbar">
+<header class="header-container">
+  <div class="header-container__top">
+    <div class="header-container__title">
+      <h3><b>Velas Candil</b></h3>
+    </div>
 
-  <a mat-button routerLink="/home" class="brand">
-    <mat-icon>local_fire_department</mat-icon>
-    <span>Velas Candil</span>
-  </a>
+    <div class="header-container__auth">
+      @if (!auth) {
+        <a class="header-container__link" (click)="login()">Login</a>
+        <a class="header-container__link" (click)="register()">Registrarse</a>
+      } @else {
+        <p>Bienvenido, {{ username }}</p>
 
-  <span class="spacer"></span>
+        <button
+          class="header-container__profile-btn"
+          [matMenuTriggerFor]="menuUsuario"
+        >
+          <mat-icon>account_circle</mat-icon>
+        </button>
 
-  <nav class="nav-links">
-    <a mat-button routerLink="/candles" routerLinkActive="link-active"
-      [routerLinkActiveOptions]="{ exact: true }">
-      Catálogo
-    </a>
-    @if (user.isAdmin()) {
-      <a mat-button routerLink="/admin/candles" routerLinkActive="link-active">
-        Admin
-      </a>
-    }
-  </nav>
+        <mat-menu #menuUsuario="matMenu">
+          <div class="header-container__menu-header">
+            <p class="header-container__username">{{ username }}</p>
 
-  <!-- Toggle tema -->
-  <button mat-icon-button (click)="toggleTheme()"
-    [matTooltip]="isDark() ? 'Modo claro' : 'Modo oscuro'">
-    <mat-icon>{{ isDark() ? 'light_mode' : 'dark_mode' }}</mat-icon>
-  </button>
+            @if (true) {
+              <span class="header-container__badge">Admin</span>
+            }
+          </div>
 
-  <!-- Menú usuario -->
-  <button mat-icon-button [matMenuTriggerFor]="menuUsuario">
-    <mat-icon>account_circle</mat-icon>
-  </button>
-
-  <mat-menu #menuUsuario="matMenu">
-    <div class="menu-header">
-      <p class="menu-username">{{ user.getUsername() }}</p>
-      @if (user.isAdmin()) {
-        <span class="badge-admin">Admin</span>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            Cerrar sesión
+          </button>
+        </mat-menu>
       }
     </div>
-    <button mat-menu-item (click)="logout()">
-      <mat-icon>logout</mat-icon>
-      Cerrar sesión
-    </button>
-  </mat-menu>
+  </div>
 
-</mat-toolbar>
+  <nav class="header-container__navigation">
+    <div class="header-container__logo">
+      <img src="/logo.webp" alt="imagen logotipo de la página web" />
+    </div>
+
+    <div class="header-container__menu">
+      <a class="header-container__link" (click)="home()">
+        <mat-icon>home</mat-icon>
+        Inicio
+      </a>
+
+      <a class="header-container__link" (click)="catalog()">
+        <mat-icon>storefront</mat-icon>
+        Catálogo
+      </a>
+
+      <a class="header-container__link" (click)="information()">
+        <mat-icon>help_outline</mat-icon>
+        Preguntas frecuentes
+      </a>
+
+      <a class="header-container__link" (click)="contact()">
+        <mat-icon>mail</mat-icon>
+        Contacto
+      </a>
+
+      <a class="header-container__link" (click)="cart()">
+        <mat-icon>shopping_cart</mat-icon>
+        Carrito
+      </a>
+    </div>
+  </nav>
+</header>

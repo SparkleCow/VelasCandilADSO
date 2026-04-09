@@ -56,6 +56,9 @@ public class User implements UserDetails {
     @Column(nullable = false, length = 100)
     private String email;
 
+    @Column(nullable = true, length = 150)
+    private String imageUrl;
+
     @Column(nullable = false, length = 100)
     private String password;
 

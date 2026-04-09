@@ -3,6 +3,7 @@ package com.velas.candil.services;
 import com.velas.candil.entities.user.User;
 import com.velas.candil.models.user.AuthRegisterDto;
 import com.velas.candil.models.user.AuthResponseDto;
+import com.velas.candil.models.user.UserInformationDto;
 import jakarta.mail.MessagingException;
 
 /**
@@ -14,6 +15,7 @@ public interface AuthenticationService {
 
     AuthResponseDto login(String username, String password);
     void register(AuthRegisterDto authRegisterDto) throws MessagingException;
+    UserInformationDto userInformation(User user);
     void sendValidationEmail(User user) throws MessagingException;
     String generateAndSaveToken(User user);
     String generateToken(int length);

@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Service
@@ -27,7 +29,7 @@ public class CandleServiceImp implements CandleService {
     private final CandleMapper candleMapper;
 
     @Value("${candle.margin.multiplier:1.7}")
-    private double marginMultiplier;
+    private BigDecimal marginMultiplier;
 
     @Override
     public Page<CandleResponseDto> findByCategory(Pageable pageable, CategoryEnum categoryEnum) {
@@ -74,13 +76,12 @@ public class CandleServiceImp implements CandleService {
 
         Candle candle = candleMapper.toEntity(candleRequestDto);
 
-        double cost = candle.getIngredients()
+        BigDecimal cost = candle.getIngredients()
                 .stream()
-                .mapToDouble(Ingredient::calculatePrice)
-                .sum();
+                .map(Ingredient::calculatePrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        candle.setPrice(cost * marginMultiplier);
-
+        candle.setPrice(cost.multiply(marginMultiplier));
         Candle saved = candleRepository.save(candle);
 
         log.info("Candle created successfully with id: {}", saved.getId());
@@ -121,12 +122,12 @@ public class CandleServiceImp implements CandleService {
 
         candleMapper.updateEntityFromDto(dto, candle);
 
-        double cost = candle.getIngredients()
+        BigDecimal cost = candle.getIngredients()
                 .stream()
-                .mapToDouble(Ingredient::calculatePrice)
-                .sum();
+                .map(Ingredient::calculatePrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        candle.setPrice(cost * marginMultiplier);
+        candle.setPrice(cost.multiply(marginMultiplier));
 
         Candle updated = candleRepository.save(candle);
 

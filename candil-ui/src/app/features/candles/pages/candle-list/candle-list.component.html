@@ -1,7 +1,4 @@
-<app-navbar></app-navbar>
-
 <div class="page-container">
-
   <!-- Header -->
   <div class="page-header">
     <h1>Catálogo de velas</h1>
@@ -12,7 +9,7 @@
   <div class="filters-bar">
     <mat-form-field appearance="outline" class="filter-search">
       <mat-label>Buscar por nombre</mat-label>
-      <input matInput [formControl]="searchCtrl">
+      <input matInput [formControl]="searchCtrl" />
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
 
@@ -74,10 +71,12 @@
       <div class="candles-grid">
         @for (candle of candles(); track candle.id) {
           <div class="candle-card" [routerLink]="['/candles', candle.id]">
-
             <div class="card-image">
               @if (candle.principalImage) {
-                <img [src]="candle.principalImage" [alt]="candle.name">
+                <img
+                  [src]="'http://localhost:8080' + candle.principalImage"
+                  [alt]="candle.name"
+                />
               } @else {
                 <div class="no-image">
                   <mat-icon>local_fire_department</mat-icon>
@@ -102,15 +101,19 @@
               </div>
 
               <div class="card-footer">
-                <span class="card-price">${{ candle.price | number:'1.0-0' }}</span>
-                <button mat-icon-button color="primary"
+                <span class="card-price"
+                  >${{ candle.price | number: "1.0-0" }}</span
+                >
+                <button
+                  mat-icon-button
+                  color="primary"
                   [routerLink]="['/candles', candle.id]"
-                  (click)="$event.stopPropagation()">
+                  (click)="$event.stopPropagation()"
+                >
                   <mat-icon>arrow_forward</mat-icon>
                 </button>
               </div>
             </div>
-
           </div>
         }
       </div>
@@ -120,9 +123,9 @@
         [pageSize]="pageSize"
         [pageSizeOptions]="[6, 12, 24]"
         (page)="onPage($event)"
-        showFirstLastButtons>
+        showFirstLastButtons
+      >
       </mat-paginator>
     }
   }
-
 </div>

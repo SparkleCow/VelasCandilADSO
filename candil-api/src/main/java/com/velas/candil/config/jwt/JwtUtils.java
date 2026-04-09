@@ -27,7 +27,7 @@ public class JwtUtils {
 
     private final JwtProperties jwtProperties;
 
-    public String generateToken(org.springframework.security.core.userdetails.UserDetails userDetails) {
+    public String generateToken(UserDetails userDetails) {
         return generateToken(userDetails, Map.of());
     }
 
@@ -35,38 +35,70 @@ public class JwtUtils {
         Instant now = Instant.now();
         Instant expirationTime = now.plusMillis(jwtProperties.getExpiration());
 
-        return builder()
+        String token = builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(Date.from(now))
                 .setExpiration(Date.from(expirationTime))
                 .signWith(generateSignKey(), SignatureAlgorithm.HS256)
                 .compact();
+
+        log.info("JWT generated for user='{}', expiresAt='{}'",
+                userDetails.getUsername(),
+                expirationTime);
+
+        return token;
     }
 
-    public boolean validateToken(String token, UserDetails userDetails) {
-        try {
-            Claims claims = extractAllClaims(token);
-            String username = claims.getSubject();
-            if (username == null || !username.equals(userDetails.getUsername())) {
-                return false;
-            }
-            Date expiration = claims.getExpiration();
-            return expiration != null && expiration.after(new Date());
-        } catch (JwtException | IllegalArgumentException ex) {
-            log.warn("JWT validation failed: {}", ex.getMessage());
+    public boolean validateToken(Claims claims, UserDetails userDetails) {
+        String username = claims.getSubject();
+
+        if (username == null) {
+            log.warn("JWT validation failed: subject is null");
             return false;
         }
+
+        if (!username.equals(userDetails.getUsername())) {
+            log.warn("JWT validation failed: username mismatch token='{}' vs user='{}'",
+                    username,
+                    userDetails.getUsername());
+            return false;
+        }
+
+        Date expiration = claims.getExpiration();
+
+        if (expiration == null) {
+            log.warn("JWT validation failed: expiration is null for user='{}'", username);
+            return false;
+        }
+
+        if (expiration.before(new Date())) {
+            log.warn("JWT expired for user='{}' at '{}'", username, expiration);
+            return false;
+        }
+
+        log.debug("JWT valid for user='{}'", username);
+        return true;
     }
 
     public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
+        String username = extractClaim(token, Claims::getSubject);
+        log.debug("Extracted username='{}' from JWT", username);
+        return username;
     }
 
     public boolean isExpired(String token) {
         try {
             Date exp = extractClaim(token, Claims::getExpiration);
-            return exp == null || exp.before(new Date());
+            boolean expired = exp == null || exp.before(new Date());
+
+            if (expired) {
+                log.warn("JWT is expired at '{}'", exp);
+            } else {
+                log.debug("JWT still valid until '{}'", exp);
+            }
+
+            return expired;
         } catch (JwtException ex) {
             log.warn("Failed to check expiration: {}", ex.getMessage());
             return true;
@@ -75,15 +107,29 @@ public class JwtUtils {
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
-        return claimsResolver.apply(claims);
+        T value = claimsResolver.apply(claims);
+
+        log.debug("Extracted claim '{}' from JWT",
+                claimsResolver.getClass().getSimpleName());
+
+        return value;
     }
 
     public Claims extractAllClaims(String token) {
-        return Jwts.parser()
-                .setSigningKey(generateSignKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        try {
+            Claims claims = Jwts.parser()
+                    .setSigningKey(generateSignKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+
+            log.debug("JWT successfully parsed for subject='{}'", claims.getSubject());
+            return claims;
+
+        } catch (JwtException ex) {
+            log.warn("JWT parsing failed: {}", ex.getMessage());
+            throw ex;
+        }
     }
 
     private Key generateSignKey() {
