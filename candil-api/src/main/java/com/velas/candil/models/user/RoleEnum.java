@@ -2,10 +2,8 @@ package com.velas.candil.models.user;
 
 public enum RoleEnum {
 
-    ADMIN("ADMIN"),
-    USER("USER");
+    ADMIN,
+    USER;
 
-    private String value;
-
-    RoleEnum(String value) {}
+    RoleEnum() {}
 }

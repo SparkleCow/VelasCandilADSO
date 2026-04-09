@@ -5,8 +5,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -17,6 +19,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @RequiredArgsConstructor
+@EnableMethodSecurity
 public class SecurityFilterConfig {
 
     @Value("${application.cors.allowed-origins}")
@@ -37,9 +40,27 @@ public class SecurityFilterConfig {
                                         "/swagger-ui/**",
                                         "/v3/api-docs/**",
                                         "/swagger-ui.html",
-                                        "/v1/auth/**"
-                                )
+                                        "/v1/auth/**")
                                 .permitAll()
+                                //Candles
+                                .requestMatchers(HttpMethod.GET, "/v1/candles/category/",
+                                        "/v1/candles/feature",
+                                        "/v1/candles/material",
+                                        "/v1/candles/date",
+                                        "/v1/candles/search",
+                                        "/v1/candles/**",
+                                        "/v1/candles").permitAll()
+
+                                .requestMatchers(HttpMethod.POST, "/v1/candles").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.PUT, "/v1/candles/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/v1/candles/**").hasRole("ADMIN")
+                                //Ingredients
+                                .requestMatchers(HttpMethod.GET, "/v1/ingredients/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/v1/ingredients").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.PUT, "/v1/ingredients/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/v1/ingredients/**").hasRole("ADMIN")
+                                //Cart
+                                .requestMatchers("/v1/cart/**").authenticated()
                                 .anyRequest()
                                 .authenticated()
                 )
