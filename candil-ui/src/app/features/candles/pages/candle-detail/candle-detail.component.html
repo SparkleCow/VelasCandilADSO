@@ -1,7 +1,4 @@
-<app-navbar></app-navbar>
-
 <div class="page-container">
-
   @if (loading()) {
     <div class="spinner-wrap">
       <mat-spinner diameter="48"></mat-spinner>
@@ -10,12 +7,14 @@
 
   @if (!loading() && candle()) {
     <div class="detail-layout">
-
       <!-- Galería izquierda -->
       <div class="gallery">
         <div class="main-image">
           @if (selectedImage()) {
-            <img [src]="selectedImage()!" [alt]="candle()!.name">
+            <img
+              [src]="'http://localhost:8080' + selectedImage()!"
+              [alt]="candle()!.name"
+            />
           } @else {
             <div class="no-image">
               <mat-icon>local_fire_department</mat-icon>
@@ -26,9 +25,12 @@
         @if (getAllImages().length > 1) {
           <div class="thumbnails">
             @for (img of getAllImages(); track img) {
-              <button class="thumb" [class.active]="selectedImage() === img"
-                (click)="selectImage(img)">
-                <img [src]="img" alt="imagen">
+              <button
+                class="thumb"
+                [class.active]="selectedImage() === img"
+                (click)="selectImage(img)"
+              >
+                <img [src]="'http://localhost:8080' + img" alt="imagen" />
               </button>
             }
           </div>
@@ -37,14 +39,13 @@
 
       <!-- Info derecha -->
       <div class="info">
-
         <a mat-button routerLink="/candles" class="back-link">
           <mat-icon>arrow_back</mat-icon> Volver al catálogo
         </a>
 
         <h1 class="candle-name">{{ candle()!.name }}</h1>
 
-        <p class="price">${{ candle()!.price | number:'1.0-0' }}</p>
+        <p class="price">${{ candle()!.price | number: "1.0-0" }}</p>
 
         <p class="description">{{ candle()!.description }}</p>
 
@@ -53,7 +54,11 @@
         <div class="meta-row">
           <span class="meta-label">Stock</span>
           <span class="meta-value" [class.out]="candle()!.stock === 0">
-            {{ candle()!.stock > 0 ? candle()!.stock + ' disponibles' : 'Sin stock' }}
+            {{
+              candle()!.stock > 0
+                ? candle()!.stock + " disponibles"
+                : "Sin stock"
+            }}
           </span>
         </div>
 
@@ -87,9 +92,12 @@
         <div class="divider"></div>
 
         <div class="actions">
-          <button mat-raised-button class="btn-cart"
+          <button
+            mat-raised-button
+            class="btn-cart"
             [disabled]="candle()!.stock === 0 || addingToCart()"
-            (click)="addToCart()">
+            (click)="addToCart()"
+          >
             @if (addingToCart()) {
               <mat-spinner diameter="20" color="accent"></mat-spinner>
             } @else {
@@ -104,9 +112,7 @@
             Regresar
           </a>
         </div>
-
       </div>
     </div>
   }
-
 </div>

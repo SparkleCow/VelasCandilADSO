@@ -102,7 +102,7 @@ export class NavbarComponent implements OnInit {
   }
 
   catalog(): void {
-    this.router.navigate(['/catalog']);
+    this.router.navigate(['/candles']);
   }
 
   home(): void {

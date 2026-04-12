@@ -1,13 +1,11 @@
-<div class="hero">
-  <div class="hero-content">
-    <h1 class="hero-title">Iluminando tu vida<br />desde 2024</h1>
-    <p class="hero-subtitle">
-      Velas artesanales elaboradas con ingredientes naturales, pensadas para
-      crear ambientes únicos en tu hogar.
-    </p>
-    <a mat-raised-button color="primary" routerLink="/candles" class="hero-btn">
-      <mat-icon>storefront</mat-icon>
-      Ver catálogo
-    </a>
+<div class="banner" id="inicio">
+  <div class="banner__overlay">
+    <div class="banner__content">
+      <h1 class="banner__title">Velas Candil</h1>
+      <p class="banner__subtitle">Luz artesanal para cada momento</p>
+      <a class="banner__btn" (click)="redirectAtCatalog()">Ver catálogo</a>
+    </div>
   </div>
 </div>
+<app-testimonials></app-testimonials>
+<app-about></app-about>

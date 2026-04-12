@@ -7,20 +7,21 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { CandleService } from '../../../../core/services/candle.service';
 import { CartService } from '../../../../core/services/cart.service';
-import { NavbarComponent } from '../../../../shared/components/navbar/navbar.component';
 import { CandleResponse } from '../../../../shared/models/candle.models';
 
 @Component({
   selector: 'app-candle-detail',
   standalone: true,
   imports: [
-    CommonModule, RouterModule,
-    MatButtonModule, MatIconModule,
-    MatProgressSpinnerModule, MatSnackBarModule,
-    NavbarComponent
+    CommonModule,
+    RouterModule,
+    MatButtonModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatSnackBarModule,
   ],
   templateUrl: './candle-detail.component.html',
-  styleUrl: './candle-detail.component.css'
+  styleUrl: './candle-detail.component.css',
 })
 export class CandleDetailComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
@@ -38,6 +39,7 @@ export class CandleDetailComponent implements OnInit {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.candleService.findById(id).subscribe({
       next: (c) => {
+        console.log(c);
         this.candle.set(c);
         this.selectedImage.set(c.principalImage ?? null);
         this.loading.set(false);
@@ -45,7 +47,7 @@ export class CandleDetailComponent implements OnInit {
       error: () => {
         this.loading.set(false);
         this.router.navigate(['/candles']);
-      }
+      },
     });
   }
 
@@ -65,22 +67,29 @@ export class CandleDetailComponent implements OnInit {
         this.cartService.addItem(c.id).subscribe({
           next: () => {
             this.addingToCart.set(false);
-            this.snackBar.open('Vela agregada al carrito', 'Ver carrito', {
-              duration: 3000,
-              horizontalPosition: 'end',
-              verticalPosition: 'top'
-            }).onAction().subscribe(() => this.router.navigate(['/cart']));
+            this.snackBar
+              .open('Vela agregada al carrito', 'Ver carrito', {
+                duration: 3000,
+                horizontalPosition: 'end',
+                verticalPosition: 'top',
+              })
+              .onAction()
+              .subscribe(() => this.router.navigate(['/cart']));
           },
           error: () => {
             this.addingToCart.set(false);
-            this.snackBar.open('Error al agregar al carrito', 'Cerrar', { duration: 3000 });
-          }
+            this.snackBar.open('Error al agregar al carrito', 'Cerrar', {
+              duration: 3000,
+            });
+          },
         });
       },
       error: () => {
         this.addingToCart.set(false);
-        this.snackBar.open('Error al conectar con el carrito', 'Cerrar', { duration: 3000 });
-      }
+        this.snackBar.open('Error al conectar con el carrito', 'Cerrar', {
+          duration: 3000,
+        });
+      },
     });
   }
 

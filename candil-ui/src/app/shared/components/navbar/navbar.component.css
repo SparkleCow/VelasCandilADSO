@@ -12,7 +12,7 @@
 .header-container {
   width: 80%;
   padding: 0 10px;
-  color: rgb(0, 0, 0);
+  color: #000000;
 }
 
 .header-container__top {
@@ -24,21 +24,22 @@
 }
 
 .header-container__title {
+  font-size: 0.8rem;
   display: flex;
   align-items: center;
   cursor: pointer;
   font-family: "Playwrite NZ", cursive;
-  font-weight: lighter;
+  font-weight: 100;
 }
 
-.header-container__title h3 {
-  opacity: 0.7;
+.header-container__title h1 {
+  opacity: 0.6;
   transition: all 0.2s ease;
   position: relative;
   display: inline-block;
 }
 
-.header-container__title h3::after {
+.header-container__title h1::after {
   content: "local_fire_department";
   font-family: "Material Icons";
   position: absolute;
@@ -50,11 +51,11 @@
   font-size: 20px;
 }
 
-.header-container__title h3:hover {
-  transform: rotate(5deg) scale(1.05);
+.header-container__title h1:hover {
+  transform: scale(1.05);
 }
 
-.header-container__title h3:hover::after {
+.header-container__title h1:hover::after {
   opacity: 1;
   transform: translateY(-50%) scale(1.1);
   color: #fcac44;

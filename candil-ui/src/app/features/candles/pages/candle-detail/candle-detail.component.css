@@ -10,7 +10,6 @@
   padding: 80px 0;
 }
 
-/* ── Layout ── */
 .detail-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -19,10 +18,12 @@
 }
 
 @media (max-width: 768px) {
-  .detail-layout { grid-template-columns: 1fr; gap: 32px; }
+  .detail-layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
 }
 
-/* ── Galería ── */
 .gallery {
   position: sticky;
   top: 88px;
@@ -56,7 +57,7 @@
   font-size: 80px;
   width: 80px;
   height: 80px;
-  color: var(--mat-sys-outline);
+  color: black;
 }
 
 .thumbnails {
@@ -90,7 +91,7 @@
 
 /* ── Info ── */
 .back-link {
-  color: var(--mat-sys-on-surface-variant) !important;
+  color: black;
   font-size: 0.8rem;
   letter-spacing: 0.5px;
   padding-left: 0 !important;
@@ -103,20 +104,20 @@
   font-size: 1.8rem;
   font-weight: 300;
   margin: 0 0 12px;
-  color: var(--mat-sys-on-surface);
+  color: black;
   letter-spacing: -0.3px;
 }
 
 .price {
   font-size: 1.6rem;
   font-weight: 500;
-  color: var(--mat-sys-on-surface);
+  color: black;
   margin: 0 0 20px;
 }
 
 .description {
   font-size: 0.9rem;
-  color: var(--mat-sys-on-surface-variant);
+  color: black;
   line-height: 1.8;
   margin: 0 0 24px;
   font-weight: 300;
@@ -139,7 +140,7 @@
   font-size: 0.78rem;
   text-transform: uppercase;
   letter-spacing: 0.8px;
-  color: var(--mat-sys-on-surface-variant);
+  color: black;
   min-width: 100px;
   padding-top: 3px;
 }
@@ -214,7 +215,7 @@
 
 .btn-cart:disabled {
   background-color: var(--mat-sys-surface-container-high) !important;
-  color: var(--mat-sys-on-surface-variant) !important;
+  color: black !important;
 }
 
 .btn-back {
@@ -223,6 +224,6 @@
   font-size: 0.85rem;
   letter-spacing: 0.5px;
   border-radius: 4px !important;
-  color: var(--mat-sys-on-surface-variant) !important;
+  color: black !important;
   border-color: var(--mat-sys-outline-variant) !important;
 }
