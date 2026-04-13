@@ -1,6 +1,6 @@
 /* ── CARDS ── */
 .features-section {
-  background-color: rgb(245, 245, 245);
+  background: #f5f2ee;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   max-width: 1000px;
@@ -24,7 +24,7 @@
 }
 
 .feature-card:hover {
-  border-color: #a07840;
+  border-color: #a1a1a1;
   box-shadow: 0 4px 20px rgba(160, 120, 64, 0.08);
 }
 
@@ -32,7 +32,7 @@
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  background: #f5ede0;
+  background: #e0d4c0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -41,14 +41,14 @@
 }
 
 .feature-card:hover .feature-icon-wrap {
-  background: #ecdcc4;
+  background: #dbcaac;
 }
 
 .feature-icon {
   font-size: 22px !important;
   width: 22px !important;
   height: 22px !important;
-  color: #a07840;
+  color: #000000;
 }
 
 .feature-card h3 {
@@ -62,23 +62,14 @@
   letter-spacing: 0;
 }
 
-.feature-divider {
-  width: 28px;
-  height: 1px;
-  background: #a07840;
-  opacity: 0.5;
-  margin: 0 auto 16px;
-}
-
 .feature-card p {
   font-size: 0.85rem;
   color: #7a6e60;
   line-height: 1.75;
   font-weight: 300;
-  margin: 0;
+  margin: 15px 0;
 }
 
-/* ── FOOTER ── */
 .info-footer {
   background: #2a2018;
 }
@@ -105,13 +96,13 @@
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  color: #a07840;
+  color: #a8a8a8;
   margin-bottom: 16px;
 }
 
 .footer-column p {
   font-size: 0.82rem;
-  color: #9a8a76;
+  color: #dddddd;
   line-height: 1.8;
   margin: 4px 0;
   font-weight: 300;
@@ -143,7 +134,7 @@
 
 .footer-note {
   font-size: 0.68rem;
-  color: #5a4e3a;
+  color: #cfcfcf;
 }
 
 @media (max-width: 600px) {

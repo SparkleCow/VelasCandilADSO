@@ -1,5 +1,5 @@
 :host {
-  background-color: rgb(245, 245, 245);
+  background: #f5f2ee;
   display: flex;
   flex-direction: column;
   min-height: 100%;

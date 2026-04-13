@@ -4,7 +4,7 @@
 
 .testimonios {
   padding: 4rem 0;
-  background: #ffffff;
+  background: #fffdf9;
   overflow: hidden;
   padding: 100px 100px;
 }
@@ -29,6 +29,9 @@
   font-size: 1.7rem;
   margin: 45px 0px 60px 0px;
   color: #2a2018;
+
+  font-style: italic;
+  line-height: 1.15;
 }
 
 .carrusel-wrapper {
@@ -43,10 +46,6 @@
   animation: slide 28s linear infinite;
 }
 
-.carrusel-track:hover {
-  animation-play-state: paused;
-}
-
 @keyframes slide {
   from {
     transform: translateX(0);
@@ -57,7 +56,7 @@
 }
 
 .card {
-  background: #f9f5ef;
+  background: #f5eade;
   border: 1px solid #e8dfd0;
   border-radius: 4px;
   padding: 1.6rem 1.8rem;
@@ -65,7 +64,14 @@
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.3rem;
+  margin: 30px 0px;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.card.animate {
+  animation: fadeUp 0.8s ease forwards;
 }
 
 .card__stars {
@@ -77,7 +83,7 @@
   display: inline-block;
   width: 13px;
   height: 13px;
-  background: #a07840;
+  background: #ffcc84;
   clip-path: polygon(
     50% 0%,
     61% 35%,
@@ -108,8 +114,8 @@
 }
 
 .card__avatar {
-  width: 34px;
-  height: 34px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   background: #e0d4c0;
   display: flex;
@@ -129,7 +135,7 @@
 
 .card__location {
   font-size: 0.68rem;
-  color: #aaa;
+  color: #000000;
   letter-spacing: 0.05em;
 }
 .carrusel-wrapper {
@@ -149,4 +155,15 @@
     black 88%,
     transparent 100%
   );
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
