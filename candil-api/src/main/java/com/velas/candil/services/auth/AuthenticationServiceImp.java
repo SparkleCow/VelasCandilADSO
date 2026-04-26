@@ -1,4 +1,4 @@
-package com.velas.candil.services;
+package com.velas.candil.services.auth;
 
 import com.velas.candil.config.jwt.JwtUtils;
 import com.velas.candil.entities.user.ActivateToken;

@@ -5,7 +5,7 @@ import com.velas.candil.models.user.AuthLoginDto;
 import com.velas.candil.models.user.AuthRegisterDto;
 import com.velas.candil.models.user.AuthResponseDto;
 import com.velas.candil.models.user.UserInformationDto;
-import com.velas.candil.services.AuthenticationService;
+import com.velas.candil.services.auth.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

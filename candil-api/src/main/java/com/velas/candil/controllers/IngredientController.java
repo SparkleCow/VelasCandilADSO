@@ -4,7 +4,7 @@ import com.velas.candil.models.ingredient.IngredientRequestDto;
 import com.velas.candil.models.ingredient.IngredientResponseDto;
 import com.velas.candil.models.ingredient.IngredientType;
 import com.velas.candil.models.ingredient.IngredientUpdateDto;
-import com.velas.candil.services.IngredientService;
+import com.velas.candil.services.product.IngredientService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;

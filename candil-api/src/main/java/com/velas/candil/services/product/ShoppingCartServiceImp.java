@@ -1,4 +1,4 @@
-package com.velas.candil.services;
+package com.velas.candil.services.product;
 
 import com.velas.candil.entities.candle.Candle;
 import com.velas.candil.entities.cartItem.CartItem;

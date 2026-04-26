@@ -6,7 +6,7 @@ import com.velas.candil.models.candle.MaterialEnum;
 import com.velas.candil.models.candle.CandleRequestDto;
 import com.velas.candil.models.candle.CandleResponseDto;
 import com.velas.candil.models.candle.CandleUpdateDto;
-import com.velas.candil.services.CandleService;
+import com.velas.candil.services.product.CandleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
