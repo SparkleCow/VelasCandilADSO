@@ -33,6 +33,7 @@ export class RegisterComponent {
   private readonly router = inject(Router);
 
   hidePassword = signal(true);
+  registerError = signal('');
 
   form = this.fb.nonNullable.group({
     firstName: this.fb.nonNullable.control('', [
@@ -59,17 +60,40 @@ export class RegisterComponent {
     ]),
   });
 
+  get firstNameControl() {
+    return this.form.controls.firstName;
+  }
+
+  get lastNameControl() {
+    return this.form.controls.lastName;
+  }
+
+  get usernameControl() {
+    return this.form.controls.username;
+  }
+
+  get emailControl() {
+    return this.form.controls.email;
+  }
+
+  get passwordControl() {
+    return this.form.controls.password;
+  }
+
   submit(): void {
-    if (this.form.invalid) return;
+    this.registerError.set('');
+
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
 
     this.authService.register(this.form.getRawValue()).subscribe({
       next: () => {
-        alert('Revisa tu correo para activar tu cuenta');
         this.router.navigate(['/activate-account']);
       },
-      error: (err) => {
-        console.error(err);
-        alert('Error al registrar usuario');
+      error: () => {
+        this.registerError.set('No fue posible completar el registro. Revisa tus datos e intenta de nuevo.');
       },
     });
   }

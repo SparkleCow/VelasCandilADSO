@@ -1,4 +1,4 @@
-.auth-page {
+.create-page {
   min-height: 100vh;
   padding: clamp(1rem, 3vw, 2rem);
   background:
@@ -10,7 +10,7 @@
 .auth-layout {
   min-height: calc(100vh - clamp(2rem, 6vw, 4rem));
   display: grid;
-  grid-template-columns: 1fr 1.25fr;
+  grid-template-columns: 1fr;
   border-radius: 24px;
   overflow: hidden;
   box-shadow: 0 12px 36px rgb(99 76 38 / 14%);
@@ -25,8 +25,8 @@
 }
 
 .auth-card {
-  width: min(100%, 420px);
-  padding: 0.5rem 1.25rem 0.5rem;
+  width: min(100%, 900px);
+  padding: 1.4rem 1.25rem 1rem;
   border-radius: 20px;
   box-shadow: none;
   background: #fffefb;
@@ -57,84 +57,78 @@
   color: #6f5a39;
 }
 
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.ingredient-grid {
+  grid-template-columns: 1.2fr 0.8fr auto;
+}
+
 .full-width {
   width: 100%;
   margin-bottom: 0.8rem;
 }
 
-.form-error {
-  margin: 0.3rem 0 1rem;
-  font-size: 0.9rem;
-  color: #b3261e;
+.chip-block {
+  margin: 0.2rem 0 1rem;
 }
 
-.link {
-  margin-top: 1.1rem;
-  text-align: center;
-}
-
-.link a {
-  color: #7b5b2d;
-  font-weight: 600;
-  text-decoration-color: rgb(123 91 45 / 45%);
-  text-underline-offset: 3px;
-}
-
-.link a:hover {
-  color: #5d441f;
-}
-
-.auth-visual-panel {
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  justify-content: stretch;
-  background:
-    linear-gradient(160deg, rgb(103 78 38 / 88%), rgb(176 146 91 / 78%)),
-    radial-gradient(circle at 82% 22%, rgb(255 249 234 / 20%), transparent 42%),
-    radial-gradient(circle at 22% 80%, rgb(255 246 223 / 28%), transparent 45%);
-}
-
-.visual-image {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-
-.visual-overlay {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  padding: clamp(1.5rem, 4vw, 2.4rem);
-  color: #fffdf9;
-  backdrop-filter: blur(2px);
-  background: linear-gradient(180deg, rgb(60 40 11 / 10%), rgb(60 40 11 / 50%));
-}
-
-.visual-chip {
-  display: inline-block;
-  margin-bottom: 0.7rem;
-  padding: 0.35rem 0.65rem;
-  border-radius: 999px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  background: rgb(255 246 227 / 22%);
-}
-
-.visual-overlay h3 {
+.chip-block h3,
+.dynamic-section h3 {
   margin: 0 0 0.6rem;
-  font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+  color: #5b4725;
+  font-size: 0.98rem;
 }
 
-.visual-overlay p {
+.dynamic-section {
+  margin-bottom: 1rem;
+  padding: 0.9rem;
+  border: 1px solid #eadfc8;
+  border-radius: 12px;
+  background: #fffdf7;
+}
+
+.inline-controls {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: start;
+}
+
+.list-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.list-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #e5d8be;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.list-row span {
+  font-size: 0.9rem;
+  color: #5d4a2a;
+  overflow-wrap: anywhere;
+}
+
+.empty-text {
   margin: 0;
-  max-width: 36ch;
-  color: rgb(255 252 244 / 92%);
+  color: #7d6b4d;
+  font-size: 0.9rem;
+}
+
+.actions {
+  margin-top: 1rem;
 }
 
 :host ::ng-deep .mat-mdc-form-field .mdc-notched-outline__leading,
@@ -151,7 +145,8 @@
 }
 
 :host ::ng-deep .mat-mdc-form-field .mdc-floating-label,
-:host ::ng-deep .mat-mdc-form-field .mat-mdc-input-element {
+:host ::ng-deep .mat-mdc-form-field .mat-mdc-input-element,
+:host ::ng-deep .mat-mdc-select-value-text {
   color: #5b4725 !important;
 }
 
@@ -164,36 +159,13 @@
   background-color: #765928 !important;
 }
 
-@media (max-width: 1024px) {
-  .auth-layout {
+@media (max-width: 900px) {
+  .form-grid,
+  .ingredient-grid {
     grid-template-columns: 1fr;
   }
 
-  .auth-visual-panel {
-    min-height: 240px;
-    order: -1;
-  }
-}
-
-@media (max-width: 600px) {
-  .auth-page {
-    padding: 0.75rem;
-  }
-
-  .auth-layout {
-    min-height: calc(100vh - 1.5rem);
-    border-radius: 16px;
-  }
-
-  .auth-form-panel {
-    padding: 1rem;
-  }
-
-  .auth-card {
-    padding: 0.5rem;
-  }
-
-  .auth-visual-panel {
-    min-height: 200px;
+  .inline-controls {
+    grid-template-columns: 1fr;
   }
 }

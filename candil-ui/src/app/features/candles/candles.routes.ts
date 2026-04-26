@@ -15,6 +15,12 @@ export const CANDLE_ROUTES: Routes = [
       import('./pages/candle-list/candle-list.component').then(m => m.CandleListComponent)
   },
   {
+    path: 'candles/create',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./pages/candle-create/candle-create.component').then(m => m.CandleCreateComponent)
+  },
+  {
     path: 'candles/:id',
     canActivate: [authGuard],
     loadComponent: () =>

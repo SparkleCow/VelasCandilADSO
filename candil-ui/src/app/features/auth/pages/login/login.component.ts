@@ -33,19 +33,33 @@ export class LoginComponent {
   private router = inject(Router);
 
   hidePassword = signal(true);
+  loginError = signal('');
 
   form = this.fb.nonNullable.group({
-    username: ['', Validators.required],
-    password: ['', Validators.required],
+    username: ['', [Validators.required, Validators.minLength(3)]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
   });
 
+  get usernameControl() {
+    return this.form.controls.username;
+  }
+
+  get passwordControl() {
+    return this.form.controls.password;
+  }
+
   submit(): void {
-    if (this.form.invalid) return;
+    this.loginError.set('');
+
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
 
     this.authService.login(this.form.getRawValue())
       .subscribe({
         next: () => this.router.navigate(['/']),
-        error: () => alert('Credenciales incorrectas')
+        error: () => this.loginError.set('Credenciales incorrectas. Verifica tus datos e intenta de nuevo.')
       });
   }
 }

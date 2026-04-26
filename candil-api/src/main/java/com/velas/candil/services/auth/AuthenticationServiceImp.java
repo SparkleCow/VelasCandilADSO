@@ -30,6 +30,8 @@ import org.springframework.stereotype.Service;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -108,7 +110,13 @@ public class AuthenticationServiceImp implements AuthenticationService {
 
     @Override
     public UserInformationDto userInformation(User user) {
-        return new UserInformationDto(user.getUsername(), user.getImageUrl());
+        String fullName = String.join(" ",
+                Optional.ofNullable(user.getFirstName()).orElse(""),
+                Optional.ofNullable(user.getLastName()).orElse("")
+        ).trim();
+
+        return new UserInformationDto(user.getId(), user.getUsername(), fullName,
+                user.getImageUrl(), user.getRoles().stream().map(x -> x.getRole().name()).collect(Collectors.toSet()));
     }
 
     @Override

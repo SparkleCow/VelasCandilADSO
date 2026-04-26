@@ -58,7 +58,7 @@ public class DataInitializer {
                 .materialEnums(Set.of(MaterialEnum.SOY_WAX))
                 .featureEnums(Set.of(FeatureEnum.SCENTED))
                 .categories(Set.of(CategoryEnum.AROMATIC))
-                .images(List.of("lavender-1.jpg", "lavender-2.jpg"))
+                .images(List.of("/images/lavanda.jpg", "/images/lavanda.jpg"))
                 .build();
 
         Candle vainilla = Candle.builder()
@@ -70,7 +70,7 @@ public class DataInitializer {
                 .materialEnums(Set.of(MaterialEnum.BEESWAX))
                 .featureEnums(Set.of(FeatureEnum.SCENTED))
                 .categories(Set.of(CategoryEnum.DECORATIVE))
-                .images(List.of("vanilla-1.jpg", "vanilla-2.jpg"))
+                .images(List.of("/images/vanilla.jpg", "/images/vanilla.jpg"))
                 .build();
 
         Candle sandalwood = Candle.builder()
@@ -82,7 +82,7 @@ public class DataInitializer {
                 .materialEnums(Set.of(MaterialEnum.SOY_WAX))
                 .featureEnums(Set.of(FeatureEnum.SCENTED))
                 .categories(Set.of(CategoryEnum.AROMATIC))
-                .images(List.of("sandalwood-1.jpg", "sandalwood-2.jpg"))
+                .images(List.of("/images/sandal.jpg", "/images/sandal.jpg"))
                 .build();
 
         Candle citrus = Candle.builder()
@@ -94,7 +94,7 @@ public class DataInitializer {
                 .materialEnums(Set.of(MaterialEnum.SOY_WAX))
                 .featureEnums(Set.of(FeatureEnum.SCENTED))
                 .categories(Set.of(CategoryEnum.DECORATIVE))
-                .images(List.of("citrus-1.jpg", "citrus-2.jpg"))
+                .images(List.of("/images/citrus.jpg", "/images/citrus.jpg"))
                 .build();
 
         Candle ocean = Candle.builder()
@@ -106,7 +106,7 @@ public class DataInitializer {
                 .materialEnums(Set.of(MaterialEnum.BEESWAX))
                 .featureEnums(Set.of(FeatureEnum.SCENTED))
                 .categories(Set.of(CategoryEnum.ROMANTIC))
-                .images(List.of("ocean-1.jpg", "ocean-2.jpg"))
+                .images(List.of("/images/ocean.jpg", "/images/ocean.jpg"))
                 .build();
 
         Candle cinnamon = Candle.builder()
@@ -118,7 +118,7 @@ public class DataInitializer {
                 .materialEnums(Set.of(MaterialEnum.SOY_WAX))
                 .featureEnums(Set.of(FeatureEnum.HANDMADE))
                 .categories(Set.of(CategoryEnum.DECORATIVE))
-                .images(List.of("cinnamon-1.jpg", "cinnamon-2.jpg"))
+                .images(List.of("/images/cinnamon.jpg", "/images/cinnamon.jpg"))
                 .build();
 
         Candle rose = Candle.builder()
@@ -130,7 +130,7 @@ public class DataInitializer {
                 .materialEnums(Set.of(MaterialEnum.BEESWAX))
                 .featureEnums(Set.of(FeatureEnum.HANDMADE))
                 .categories(Set.of(CategoryEnum.RELIGIOUS))
-                .images(List.of("rose-1.jpg", "rose-2.jpg"))
+                .images(List.of("/images/rose.jpg", "/images/rose.jpg"))
                 .build();
 
         Candle coffee = Candle.builder()
@@ -142,7 +142,7 @@ public class DataInitializer {
                 .materialEnums(Set.of(MaterialEnum.SOY_WAX))
                 .featureEnums(Set.of(FeatureEnum.SCENTED))
                 .categories(Set.of(CategoryEnum.DECORATIVE))
-                .images(List.of("coffee-1.jpg", "coffee-2.jpg"))
+                .images(List.of("/images/coffee.jpg", "/images/coffee.jpg"))
                 .build();
 
         candleRepository.saveAll(List.of(lavanda, vainilla,lavanda, vainilla,
