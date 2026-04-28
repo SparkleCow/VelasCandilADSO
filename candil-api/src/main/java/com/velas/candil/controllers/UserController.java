@@ -38,7 +38,7 @@ public class UserController {
         return ResponseEntity.ok(userService.findUsersByUsernameContaining(username));
     }
 
-    @PostMapping("/upload")
+    @PutMapping("/upload")
     public ResponseEntity<String> uploadFile(@RequestParam String key,
                                                          @RequestPart MultipartFile file,
                                                          Authentication authentication) throws IOException {
