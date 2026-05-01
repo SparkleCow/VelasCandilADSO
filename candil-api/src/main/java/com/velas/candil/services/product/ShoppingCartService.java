@@ -1,4 +1,4 @@
-package com.velas.candil.services;
+package com.velas.candil.services.product;
 
 import com.velas.candil.entities.order.Order;
 import com.velas.candil.models.shoppingCart.ShoppingCartResponseDto;

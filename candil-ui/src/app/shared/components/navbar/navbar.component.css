@@ -72,6 +72,22 @@
   gap: 1rem;
 }
 
+.header-container__dashboard-btn {
+  border: 1px solid #000000;
+  background: transparent;
+  color: #000000;
+  border-radius: 20px;
+  padding: 0.3rem 0.8rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.header-container__dashboard-btn:hover {
+  background: #000000;
+  color: #ffffff;
+}
+
 .header-container__link {
   display: flex;
   align-items: center;
@@ -161,6 +177,20 @@
   flex-grow: 2;
   justify-content: end;
   gap: 5rem;
+}
+
+.header-container__avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.header-container__profile-btn {
+  padding: 0;
+  border-radius: 50%;
+  overflow: hidden;
 }
 
 @keyframes fadeUp {

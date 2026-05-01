@@ -8,6 +8,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AuthService } from '../../../core/services/auth.service';
 import { UserInformation } from '../../models/user-information.models';
+import { UserService } from '../../../core/services/user.service';
 
 @Component({
   selector: 'app-navbar',
@@ -28,21 +29,25 @@ export class NavbarComponent implements OnInit {
   auth: boolean = false;
   username: String = '';
   imageUrl: String = '';
+  isAdmin = false;
 
   constructor(
     private authService: AuthService,
+    private userService: UserService,
     private router: Router,
   ) {}
 
   ngOnInit(): void {
-    this.authService.getUserInformation().subscribe({
+    this.userService.getUserInformation().subscribe({
       next: (response: UserInformation) => {
         this.auth = true;
         this.username = response.username;
         this.imageUrl = response.imageUrl;
+        this.isAdmin = this.hasAdminRole(response.roles ?? []);
       },
       error: () => {
         this.auth = false;
+        this.isAdmin = false;
       },
     });
 
@@ -82,6 +87,7 @@ export class NavbarComponent implements OnInit {
   logout(): void {
     this.authService.logout();
     this.auth = false;
+    this.isAdmin = false;
     this.router.navigate(['/']);
   }
 
@@ -91,6 +97,18 @@ export class NavbarComponent implements OnInit {
 
   cart(): void {
     this.router.navigate(['/cart']);
+  }
+
+  profile(): void {
+    this.router.navigate(['/profile']);
+  }
+
+  purchases(): void {
+    this.router.navigate(['/purchases']);
+  }
+
+  createCandle(): void {
+    this.router.navigate(['/candles/create']);
   }
 
   contact(): void {
@@ -107,5 +125,15 @@ export class NavbarComponent implements OnInit {
 
   home(): void {
     this.router.navigate(['/']);
+  }
+
+  private hasAdminRole(roles: Array<string | { authority?: string }>): boolean {
+    return roles.some(role => {
+      if (typeof role === 'string') {
+        return role === 'ADMIN' || role === 'ROLE_ADMIN';
+      }
+
+      return role.authority === 'ADMIN' || role.authority === 'ROLE_ADMIN';
+    });
   }
 }

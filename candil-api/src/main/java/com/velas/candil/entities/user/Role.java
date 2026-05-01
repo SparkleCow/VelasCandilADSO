@@ -22,6 +22,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "roles")
 @Builder
 public class Role implements GrantedAuthority {
 

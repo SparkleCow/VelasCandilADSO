@@ -1,9 +1,14 @@
 import { Injectable, inject } from '@angular/core';
 import { TokenService } from './token.service';
+import { Observable } from 'rxjs';
+import { UserInformation } from '../../shared/models/user-information.models';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
   private readonly tokenService = inject(TokenService);
+  private readonly http = inject(HttpClient);
+  private readonly baseUrl = 'http://localhost:8080/v1/user';
 
   private decodePayload(): Record<string, unknown> | null {
     const token = this.tokenService.get();
@@ -44,5 +49,21 @@ export class UserService {
 
   isLogged(): boolean {
     return this.tokenService.isLogged();
+  }
+
+  getUserInformation(): Observable<UserInformation> {
+    return this.http.get<UserInformation>(`${this.baseUrl}/self`);
+  }
+
+  updateUsername(username: string): Observable<UserInformation> {
+    return this.http.patch<UserInformation>(`${this.baseUrl}/self/username`, { username });
+  }
+
+  updateProfileImage(file: File, key: string): Observable<string> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.put(`${this.baseUrl}/upload?key=${encodeURIComponent(key)}`, formData, {
+      responseType: 'text',
+    });
   }
 }

@@ -1,4 +1,4 @@
-package com.velas.candil.services;
+package com.velas.candil.services.product;
 
 import com.velas.candil.models.candle.CategoryEnum;
 import com.velas.candil.models.candle.FeatureEnum;
@@ -6,6 +6,7 @@ import com.velas.candil.models.candle.MaterialEnum;
 import com.velas.candil.models.candle.CandleRequestDto;
 import com.velas.candil.models.candle.CandleResponseDto;
 import com.velas.candil.models.candle.CandleUpdateDto;
+import com.velas.candil.services.CrudService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

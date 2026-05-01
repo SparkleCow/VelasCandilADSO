@@ -1,7 +1,7 @@
 package com.velas.candil.controllers;
 
 import com.velas.candil.models.shoppingCart.ShoppingCartResponseDto;
-import com.velas.candil.services.ShoppingCartService;
+import com.velas.candil.services.product.ShoppingCartService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;

@@ -1,4 +1,4 @@
-package com.velas.candil.services;
+package com.velas.candil.services.auth;
 
 import com.velas.candil.config.jwt.JwtUtils;
 import com.velas.candil.entities.user.ActivateToken;
@@ -30,6 +30,8 @@ import org.springframework.stereotype.Service;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -104,11 +106,6 @@ public class AuthenticationServiceImp implements AuthenticationService {
             throw new MessagingErrorException("Error sending validation email" + e.getMessage());
         }
         log.info("User registered with username: {}", user.getUsername());
-    }
-
-    @Override
-    public UserInformationDto userInformation(User user) {
-        return new UserInformationDto(user.getUsername(), user.getImageUrl());
     }
 
     @Override

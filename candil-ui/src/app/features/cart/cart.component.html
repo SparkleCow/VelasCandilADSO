@@ -1,0 +1,110 @@
+<div class="cart-page">
+  <mat-card class="cart-card">
+    <div class="cart-layout">
+      <section class="cart-main">
+        <div class="cart-header">
+          <div>
+            <p class="kicker">Tu seleccion</p>
+            <h1>Carrito de compras</h1>
+          </div>
+          @if (hasItems()) {
+            <button
+              mat-stroked-button
+              class="clear-cart-btn"
+              (click)="clearCart()"
+              [disabled]="loading() || actionLoading()"
+            >
+              <mat-icon>delete_sweep</mat-icon>
+              Vaciar carrito
+            </button>
+          }
+        </div>
+
+        @if (loading()) {
+          <div class="state-block">
+            <mat-spinner diameter="42"></mat-spinner>
+            <p>Cargando carrito...</p>
+          </div>
+        } @else if (errorMessage()) {
+          <div class="state-block error">
+            <p>{{ errorMessage() }}</p>
+            <button mat-flat-button color="primary" (click)="loadCart()">Reintentar</button>
+          </div>
+        } @else if (!hasItems()) {
+          <div class="state-block">
+            <mat-icon class="state-icon">shopping_cart</mat-icon>
+            <p>Tu carrito esta vacio.</p>
+          </div>
+        } @else {
+          <div class="cart-list">
+            @for (item of cart()!.items; track item.id) {
+              <article class="cart-item">
+                <div class="item-main">
+                  <h3>{{ item.candleName }}</h3>
+                  <p class="muted">Precio unitario: ${{ item.price | number: '1.0-0' }}</p>
+                  <p class="subtotal">Subtotal: ${{ item.subtotal | number: '1.0-0' }}</p>
+                </div>
+
+                <div class="item-actions">
+                  <div class="quantity-actions">
+                    <button
+                      mat-mini-fab
+                      class="qty-btn"
+                      (click)="decreaseItem(item.candleId)"
+                      [disabled]="actionLoading()"
+                      aria-label="Disminuir cantidad"
+                    >
+                      <mat-icon>remove</mat-icon>
+                    </button>
+                    <span>{{ item.quantity }}</span>
+                    <button
+                      mat-mini-fab
+                      class="qty-btn"
+                      (click)="increaseItem(item.candleId)"
+                      [disabled]="actionLoading()"
+                      aria-label="Aumentar cantidad"
+                    >
+                      <mat-icon>add</mat-icon>
+                    </button>
+                  </div>
+
+                  <button
+                    mat-stroked-button
+                    class="remove-btn"
+                    (click)="removeItem(item.candleId)"
+                    [disabled]="actionLoading()"
+                  >
+                    Eliminar
+                  </button>
+                </div>
+              </article>
+            }
+          </div>
+
+          <div class="cart-footer">
+            <p class="cart-total">
+              Subtotal total
+              <strong>${{ cart()!.subTotal | number: '1.0-0' }}</strong>
+            </p>
+          </div>
+        }
+      </section>
+
+      <aside class="cart-visual">
+        <div class="visual-hero">
+          <div class="visual-overlay"></div>
+          <div class="visual-content">
+            <p class="visual-kicker">Momentos Candil</p>
+            <h2>Tu compra huele a hogar</h2>
+            <p>Combina aromas y crea ambientes calidos para cada espacio.</p>
+          </div>
+        </div>
+        <div class="visual-badges">
+          <span><mat-icon>local_fire_department</mat-icon> Artesanal</span>
+          <span><mat-icon>spa</mat-icon> Aromas suaves</span>
+          <span><mat-icon>redeem</mat-icon> Regalos especiales</span>
+        </div>
+      </aside>
+    </div>
+  </mat-card>
+</div>

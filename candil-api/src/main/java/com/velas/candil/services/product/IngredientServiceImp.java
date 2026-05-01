@@ -1,4 +1,4 @@
-package com.velas.candil.services;
+package com.velas.candil.services.product;
 
 import com.velas.candil.entities.ingredient.Ingredient;
 import com.velas.candil.mappers.IngredientMapper;

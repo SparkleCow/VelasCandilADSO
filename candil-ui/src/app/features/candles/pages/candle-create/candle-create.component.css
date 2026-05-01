@@ -1,0 +1,171 @@
+.create-page {
+  min-height: 100vh;
+  padding: clamp(1rem, 3vw, 2rem);
+  background:
+    radial-gradient(circle at 18% 18%, rgb(177 151 104 / 20%), transparent 40%),
+    linear-gradient(125deg, #fffef9 0%, #f4eddf 100%);
+  box-sizing: border-box;
+}
+
+.auth-layout {
+  min-height: calc(100vh - clamp(2rem, 6vw, 4rem));
+  display: grid;
+  grid-template-columns: 1fr;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 12px 36px rgb(99 76 38 / 14%);
+  background-color: #fffdf7;
+}
+
+.auth-form-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1.25rem, 4vw, 3rem);
+}
+
+.auth-card {
+  width: min(100%, 900px);
+  padding: 1.4rem 1.25rem 1rem;
+  border-radius: 20px;
+  box-shadow: none;
+  background: #fffefb;
+  border: 1px solid #eadfc8;
+}
+
+.overline {
+  margin: 0;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #8a6a36;
+}
+
+.title {
+  margin: 0.45rem 0 0.55rem;
+  font-size: clamp(1.62rem, 3vw, 2.05rem);
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  color: #4c3a1f;
+}
+
+.subtitle {
+  margin: 0 0 1.4rem;
+  font-size: 0.96rem;
+  line-height: 1.45;
+  color: #6f5a39;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.ingredient-grid {
+  grid-template-columns: 1.2fr 0.8fr auto;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 0.8rem;
+}
+
+.chip-block {
+  margin: 0.2rem 0 1rem;
+}
+
+.chip-block h3,
+.dynamic-section h3 {
+  margin: 0 0 0.6rem;
+  color: #5b4725;
+  font-size: 0.98rem;
+}
+
+.dynamic-section {
+  margin-bottom: 1rem;
+  padding: 0.9rem;
+  border: 1px solid #eadfc8;
+  border-radius: 12px;
+  background: #fffdf7;
+}
+
+.inline-controls {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: start;
+}
+
+.list-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.list-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #e5d8be;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.list-row span {
+  font-size: 0.9rem;
+  color: #5d4a2a;
+  overflow-wrap: anywhere;
+}
+
+.empty-text {
+  margin: 0;
+  color: #7d6b4d;
+  font-size: 0.9rem;
+}
+
+.actions {
+  margin-top: 1rem;
+}
+
+:host ::ng-deep .mat-mdc-form-field .mdc-notched-outline__leading,
+:host ::ng-deep .mat-mdc-form-field .mdc-notched-outline__notch,
+:host ::ng-deep .mat-mdc-form-field .mdc-notched-outline__trailing {
+  border-color: #d9c7a3 !important;
+}
+
+:host ::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline__leading,
+:host ::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline__notch,
+:host ::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline__trailing {
+  border-color: #9a7843 !important;
+  border-width: 2px !important;
+}
+
+:host ::ng-deep .mat-mdc-form-field .mdc-floating-label,
+:host ::ng-deep .mat-mdc-form-field .mat-mdc-input-element,
+:host ::ng-deep .mat-mdc-select-value-text {
+  color: #5b4725 !important;
+}
+
+:host ::ng-deep .mat-mdc-raised-button.mat-primary {
+  background-color: #8a6a36 !important;
+  color: #fffdf8 !important;
+}
+
+:host ::ng-deep .mat-mdc-raised-button.mat-primary:hover {
+  background-color: #765928 !important;
+}
+
+@media (max-width: 900px) {
+  .form-grid,
+  .ingredient-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .inline-controls {
+    grid-template-columns: 1fr;
+  }
+}
