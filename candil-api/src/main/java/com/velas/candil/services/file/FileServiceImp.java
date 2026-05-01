@@ -21,9 +21,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -107,25 +110,80 @@ public class FileServiceImp implements FileService{
     }
 
     @Override
-    public String uploadDataToS3(MultipartFile data, String key, User user) throws IOException {
+    public String uploadSingleFile(MultipartFile file, String baseKey) throws IOException {
+
         Path path = Paths.get(destinationFolder);
         if (!Files.exists(path)) {
             Files.createDirectories(path);
         }
 
-        byte[] compressedBytes = compressData(data.getBytes());
+        String originalName = Objects.requireNonNull(file.getOriginalFilename());
 
-        Path filePath = path.resolve(Objects.requireNonNull(data.getOriginalFilename()) + ".gz");
-        Path finalPath = Files.write(filePath, compressedBytes);
+        // Sanitizer
+        String safeName = originalName.replaceAll("[^a-zA-Z0-9\\.\\-]", "_");
 
-        key = user.getUsername() + "/" + key + ".gz";
+        // Unique name
+        String uniqueName = System.currentTimeMillis() + "_" + safeName;
 
-        if (Boolean.TRUE.equals(s3Service.uploadFile(key, finalPath))) {
-            Files.delete(filePath);
-            return "File uploaded successfully (compressed)";
+        Path filePath = path.resolve(uniqueName);
+
+        try {
+            Files.write(filePath, file.getBytes());
+
+            String key = "velas/" + baseKey + "/principal_" + uniqueName;
+
+            if (Boolean.TRUE.equals(s3Service.uploadFile(key, filePath))) {
+                return key;
+            }
+
+            return null;
+
+        } finally {
+            try {
+                Files.deleteIfExists(filePath);
+            } catch (IOException ignored) {}
+        }
+    }
+
+    @Override
+    public List<String> uploadMultipleFiles(List<MultipartFile> files, String baseKey) throws IOException {
+
+        List<String> uploadedKeys = new ArrayList<>();
+
+        Path path = Paths.get(destinationFolder);
+        if (!Files.exists(path)) {
+            Files.createDirectories(path);
         }
 
-        return "File could not be uploaded";
+        for (MultipartFile file : files) {
+
+            String originalName = Objects.requireNonNull(file.getOriginalFilename());
+
+            // Sanitizer
+            String safeName = originalName.replaceAll("[^a-zA-Z0-9\\.\\-]", "_");
+
+            String uniqueName = UUID.randomUUID() + "_" + safeName;
+
+            Path filePath = path.resolve(uniqueName);
+
+            try {
+                Files.write(filePath, file.getBytes());
+
+                String key = "velas/" + baseKey + "/" + uniqueName;
+
+                if (Boolean.TRUE.equals(s3Service.uploadFile(key, filePath))) {
+                    uploadedKeys.add(key);
+                }
+
+            } finally {
+                // Siempre intenta borrar el archivo temporal
+                try {
+                    Files.deleteIfExists(filePath);
+                } catch (IOException ignored) {}
+            }
+        }
+
+        return uploadedKeys;
     }
 
     @Override

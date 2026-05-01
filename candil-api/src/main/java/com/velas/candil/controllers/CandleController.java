@@ -1,11 +1,13 @@
 package com.velas.candil.controllers;
 
+import com.velas.candil.entities.user.User;
 import com.velas.candil.models.candle.CategoryEnum;
 import com.velas.candil.models.candle.FeatureEnum;
 import com.velas.candil.models.candle.MaterialEnum;
 import com.velas.candil.models.candle.CandleRequestDto;
 import com.velas.candil.models.candle.CandleResponseDto;
 import com.velas.candil.models.candle.CandleUpdateDto;
+import com.velas.candil.services.product.CandleFacadeService;
 import com.velas.candil.services.product.CandleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -18,10 +20,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,18 +37,29 @@ import java.util.Date;
 public class CandleController {
 
     private final CandleService candleService;
+    private final CandleFacadeService candleFacadeService;
 
-    @Operation(summary = "Create a new candle")
+    @Operation(summary = "Create a new candle with images")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Candle created successfully",
                     content = @Content(schema = @Schema(implementation = CandleResponseDto.class))),
-            @ApiResponse(responseCode = "400", description = "Invalid request body", content = @Content)
+            @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content)
     })
-    @PostMapping
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<CandleResponseDto> create(
-            @RequestBody CandleRequestDto requestDto) {
+            @RequestPart("data") CandleRequestDto requestDto,
+            @RequestPart("principalImage") MultipartFile principalImage,
+            @RequestPart(value = "images", required = false) List<MultipartFile> images,
+            @AuthenticationPrincipal User user
+    ) throws IOException {
 
-        CandleResponseDto response = candleService.create(requestDto);
+        CandleResponseDto response = candleFacadeService.create(
+                requestDto,
+                principalImage,
+                images,
+                user
+        );
+
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
