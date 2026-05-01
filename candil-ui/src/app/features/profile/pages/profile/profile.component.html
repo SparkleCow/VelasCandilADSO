@@ -3,14 +3,24 @@
     <section class="left-column">
       <mat-card class="auth-card profile-header-card">
         <div class="profile-hero">
-          <div class="avatar-wrap">
+          <div class="avatar-wrap" [class.is-editing]="isEditing()">
             <img class="avatar" [src]="profileForm.controls.imageUrl.value" alt="Foto de perfil" />
+            <label class="avatar-upload-overlay" [class.disabled]="!isEditing() || isUploadingImage()">
+              <input
+                type="file"
+                accept="image/*"
+                (change)="onImageSelected($event)"
+                [disabled]="!isEditing() || isUploadingImage()"
+              />
+              <mat-icon>photo_camera</mat-icon>
+              <span>{{ isUploadingImage() ? 'Subiendo...' : 'Cambiar foto' }}</span>
+            </label>
           </div>
 
           <div class="hero-info">
             <p class="overline">Perfil de usuario</p>
             <h2 class="title">{{ fullName() }}</h2>
-            <p class="subtitle">@{{ profileForm.controls.username.value }} · {{ profileForm.controls.email.value }}</p>
+            <p class="subtitle">@{{ profileForm.controls.username.value }}</p>
           </div>
 
           <button mat-stroked-button type="button" (click)="isEditing() ? cancelEdit() : startEdit()">
@@ -24,58 +34,17 @@
         <h3>Información personal</h3>
 
         <form [formGroup]="profileForm" novalidate>
-          <div class="form-grid">
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Nombre</mat-label>
-              <input matInput formControlName="firstName" [readonly]="!isEditing()" />
-              <mat-error *ngIf="profileForm.controls.firstName.hasError('required')">
-                El nombre es obligatorio.
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Apellido</mat-label>
-              <input matInput formControlName="lastName" [readonly]="!isEditing()" />
-              <mat-error *ngIf="profileForm.controls.lastName.hasError('required')">
-                El apellido es obligatorio.
-              </mat-error>
-            </mat-form-field>
-          </div>
-
-          <div class="form-grid">
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Username</mat-label>
-              <input matInput formControlName="username" [readonly]="!isEditing()" />
-              <mat-error *ngIf="profileForm.controls.username.hasError('required')">
-                El username es obligatorio.
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Email</mat-label>
-              <input matInput type="email" formControlName="email" [readonly]="!isEditing()" />
-              <mat-error *ngIf="profileForm.controls.email.hasError('email')">
-                Ingresa un email valido.
-              </mat-error>
-            </mat-form-field>
-          </div>
-
-          <div class="image-row">
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Imagen de perfil (URL)</mat-label>
-              <input matInput formControlName="imageUrl" [readonly]="!isEditing()" />
-              <mat-error *ngIf="profileForm.controls.imageUrl.hasError('required')">
-                La imagen de perfil es obligatoria.
-              </mat-error>
-            </mat-form-field>
-            <button mat-stroked-button type="button" (click)="applyImageUrl()" [disabled]="!isEditing()">
-              Cambiar imagen
-            </button>
-          </div>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Username</mat-label>
+            <input matInput formControlName="username" [readonly]="!isEditing()" />
+            <mat-error *ngIf="profileForm.controls.username.hasError('required')">
+              El username es obligatorio.
+            </mat-error>
+          </mat-form-field>
 
           @if (isEditing()) {
             <div class="actions">
-              <button mat-raised-button color="primary" type="button" (click)="saveChanges()">
+              <button mat-raised-button color="primary" type="button" (click)="saveChanges()" [disabled]="isSaving()">
                 Guardar cambios
               </button>
             </div>

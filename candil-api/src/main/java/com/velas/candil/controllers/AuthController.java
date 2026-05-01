@@ -76,9 +76,4 @@ public class AuthController {
         authenticationService.activateAccount(token);
         return ResponseEntity.ok().build();
     }
-
-    @GetMapping("/me")
-    public ResponseEntity<UserInformationDto> getCurrentUser(Authentication authentication){
-        return ResponseEntity.ok(authenticationService.userInformation((User) authentication.getPrincipal()));
-    }
 }

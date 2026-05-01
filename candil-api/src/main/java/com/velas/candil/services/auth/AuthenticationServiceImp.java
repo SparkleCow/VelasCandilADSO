@@ -109,17 +109,6 @@ public class AuthenticationServiceImp implements AuthenticationService {
     }
 
     @Override
-    public UserInformationDto userInformation(User user) {
-        String fullName = String.join(" ",
-                Optional.ofNullable(user.getFirstName()).orElse(""),
-                Optional.ofNullable(user.getLastName()).orElse("")
-        ).trim();
-
-        return new UserInformationDto(user.getId(), user.getUsername(), fullName,
-                user.getImageUrl(), user.getRoles().stream().map(x -> x.getRole().name()).collect(Collectors.toSet()));
-    }
-
-    @Override
     public void sendValidationEmail(User user) throws MessagingException {
         String token = generateAndSaveToken(user);
         emailService.sendEmail(user.getEmail(), user.getUsername(), EmailTemplate.ACTIVATE_ACCOUNT,

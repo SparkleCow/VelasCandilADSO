@@ -1,34 +1,40 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ShoppingCartResponse } from '../../shared/models/cart.models';
+import { ShoppingCartResponseDto } from '../../shared/models/cart.models';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
   private readonly http = inject(HttpClient);
-  private readonly base = 'http://localhost:8080/v1/cart';
+  private readonly base = `${environment.apiBaseUrl}/v1/cart`;
 
-  getOrCreateCart(): Observable<ShoppingCartResponse> {
-    return this.http.get<ShoppingCartResponse>(this.base);
+  getCart(): Observable<ShoppingCartResponseDto> {
+    return this.http.get<ShoppingCartResponseDto>(this.base);
   }
 
-  addItem(candleId: number): Observable<ShoppingCartResponse> {
-    return this.http.post<ShoppingCartResponse>(`${this.base}/items/${candleId}`, {});
+  addItem(candleId: number): Observable<ShoppingCartResponseDto> {
+    return this.http.post<ShoppingCartResponseDto>(`${this.base}/items/${candleId}`, {});
   }
 
-  increaseItem(candleId: number): Observable<ShoppingCartResponse> {
-    return this.http.post<ShoppingCartResponse>(`${this.base}/items/${candleId}/increase`, {});
+  increaseItem(candleId: number): Observable<ShoppingCartResponseDto> {
+    return this.http.post<ShoppingCartResponseDto>(`${this.base}/items/${candleId}/increase`, {});
   }
 
-  decreaseItem(candleId: number): Observable<ShoppingCartResponse> {
-    return this.http.delete<ShoppingCartResponse>(`${this.base}/items/${candleId}/decrease`);
+  decreaseItem(candleId: number): Observable<ShoppingCartResponseDto> {
+    return this.http.delete<ShoppingCartResponseDto>(`${this.base}/items/${candleId}/decrease`);
   }
 
-  removeItem(candleId: number): Observable<ShoppingCartResponse> {
-    return this.http.delete<ShoppingCartResponse>(`${this.base}/items/${candleId}`);
+  removeItem(candleId: number): Observable<ShoppingCartResponseDto> {
+    return this.http.delete<ShoppingCartResponseDto>(`${this.base}/items/${candleId}`);
   }
 
-  clearCart(): Observable<ShoppingCartResponse> {
-    return this.http.delete<ShoppingCartResponse>(`${this.base}/clear`);
+  clearCart(): Observable<ShoppingCartResponseDto> {
+    return this.http.delete<ShoppingCartResponseDto>(`${this.base}/clear`);
+  }
+
+  // Backward compatibility for existing callers.
+  getOrCreateCart(): Observable<ShoppingCartResponseDto> {
+    return this.getCart();
   }
 }

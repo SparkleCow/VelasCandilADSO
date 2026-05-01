@@ -1,7 +1,7 @@
 <header class="header-container">
   <div class="header-container__top">
     <div class="header-container__title">
-      <h1><b>Velas Candil</b></h1>
+      <h1 (click)="home()"><b>Velas Candil</b></h1>
     </div>
 
     <div class="header-container__auth">
@@ -11,25 +11,53 @@
       } @else {
         <p>Bienvenido, {{ username }}</p>
 
+        @if (isAdmin) {
+          <button class="header-container__dashboard-btn" (click)="createCandle()">
+            Dashboard
+          </button>
+        }
+
         <button
           class="header-container__profile-btn"
           [matMenuTriggerFor]="menuUsuario"
         >
-          <mat-icon>account_circle</mat-icon>
-        </button>
+        <img
+        class="header-container__avatar"
+        [src]="imageUrl || 'assets/default-avatar.png'"
+        alt="Perfil"
+      />        
+    </button>
 
         <mat-menu #menuUsuario="matMenu">
           <div class="header-container__menu-header">
             <p class="header-container__username">{{ username }}</p>
-
-            @if (true) {
-              <span class="header-container__badge">Admin</span>
-            }
           </div>
+
+          <button mat-menu-item (click)="profile()">
+            <mat-icon>person</mat-icon>
+            Editar perfil
+          </button>
+
+          <button mat-menu-item (click)="purchases()">
+            <mat-icon>receipt_long</mat-icon>
+            Ver compras realizadas
+          </button>
+
+          <button mat-menu-item (click)="cart()">
+            <mat-icon>shopping_cart</mat-icon>
+            Carrito
+          </button>
+
+          @if (isAdmin) {
+            <button mat-menu-item (click)="createCandle()">
+              <mat-icon>local_fire_department</mat-icon>
+              Crear vela
+            </button>
+          }
 
           <button mat-menu-item (click)="logout()">
             <mat-icon>logout</mat-icon>
-            Cerrar sesión
+            Salir
           </button>
         </mat-menu>
       }

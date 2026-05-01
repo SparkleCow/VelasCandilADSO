@@ -32,7 +32,7 @@ public class FileServiceImp implements FileService{
     private final S3Service s3Service;
     private final AwsProperties awsProperties;
 
-    @Value("spring.destionation.folder")
+    @Value("${spring.destination.folder}")
     private String destinationFolder;
 
     public byte[] compressProfileImage(byte[] inputBytes) throws IOException {

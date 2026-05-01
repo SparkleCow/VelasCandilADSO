@@ -1,11 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { UserService } from '../../../../core/services/user.service';
+import { UserInformation } from '../../../../shared/models/user-information.models';
+import { finalize } from 'rxjs';
 
 interface PurchaseHistoryItem {
   id: number;
@@ -30,17 +33,24 @@ interface PurchaseHistoryItem {
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit{
+
   private readonly fb = inject(FormBuilder);
+  user: UserInformation|null = null;
 
   readonly isEditing = signal(false);
+  readonly isSaving = signal(false);
+  readonly isUploadingImage = signal(false);
+
+  constructor(private userService: UserService){}
+
+  ngOnInit(): void {
+    this.loadUserInformation();
+  }
 
   readonly profileForm = this.fb.nonNullable.group({
-    firstName: this.fb.nonNullable.control('Mariana', [Validators.required, Validators.maxLength(80)]),
-    lastName: this.fb.nonNullable.control('Gonzalez', [Validators.required, Validators.maxLength(80)]),
-    username: this.fb.nonNullable.control('mariana.velas', [Validators.required, Validators.maxLength(80)]),
-    email: this.fb.nonNullable.control('mariana@candil.com', [Validators.required, Validators.email]),
-    imageUrl: this.fb.nonNullable.control('https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=500&q=80', [Validators.required])
+    username: this.fb.nonNullable.control('', [Validators.required, Validators.maxLength(80)]),
+    imageUrl: this.fb.nonNullable.control('assets/default-avatar.png'),
   });
 
   private initialProfileSnapshot = this.profileForm.getRawValue();
@@ -54,8 +64,8 @@ export class ProfileComponent {
   ]);
 
   readonly fullName = computed(() => {
-    const { firstName, lastName } = this.profileForm.getRawValue();
-    return `${firstName} ${lastName}`.trim();
+    const { username } = this.profileForm.getRawValue();
+    return username.trim();
   });
 
   readonly totalSpent = computed(() =>
@@ -72,16 +82,80 @@ export class ProfileComponent {
   }
 
   saveChanges(): void {
-    if (this.profileForm.invalid) {
-      this.profileForm.markAllAsTouched();
+    if (this.profileForm.controls.username.invalid) {
+      this.profileForm.controls.username.markAsTouched();
       return;
     }
 
-    this.initialProfileSnapshot = this.profileForm.getRawValue();
-    this.isEditing.set(false);
+    const username = this.profileForm.controls.username.value.trim();
+    if (!username) {
+      this.profileForm.controls.username.markAsTouched();
+      return;
+    }
+
+    this.isSaving.set(true);
+    this.userService.updateUsername(username)
+      .pipe(finalize(() => this.isSaving.set(false)))
+      .subscribe({
+        next: (response: UserInformation) => {
+          this.user = response;
+          this.patchProfileForm(response);
+          this.isEditing.set(false);
+        },
+        error: () => {
+          this.profileForm.controls.username.markAsTouched();
+        },
+      });
   }
 
-  applyImageUrl(): void {
-    this.profileForm.controls.imageUrl.markAsTouched();
+  onImageSelected(event: Event): void {
+    if (!this.isEditing()) return;
+
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file) return;
+
+    const key = this.buildProfileImageKey(file);
+    this.isUploadingImage.set(true);
+    this.userService.updateProfileImage(file, key)
+      .pipe(finalize(() => {
+        this.isUploadingImage.set(false);
+        input.value = '';
+      }))
+      .subscribe({
+        next: () => {
+          // The backend stores the key and returns text response,
+          // so we re-fetch user information to get a fresh presigned URL.
+          this.loadUserInformation();
+        },
+        error: () => {},
+      });
+  }
+
+  private loadUserInformation(): void {
+    this.userService.getUserInformation().subscribe({
+      next: (response: UserInformation) => {
+        this.user = response;
+        this.patchProfileForm(response);
+      },
+      error: () => {},
+    });
+  }
+
+  private patchProfileForm(user: UserInformation): void {
+    this.profileForm.patchValue({
+      username: user.username ?? '',
+      imageUrl: user.imageUrl || 'assets/default-avatar.png',
+    });
+    this.initialProfileSnapshot = this.profileForm.getRawValue();
+  }
+
+  private buildProfileImageKey(file: File): string {
+    const extension = file.name.includes('.') ? file.name.split('.').pop() : 'jpg';
+    const safeUsername = (this.profileForm.controls.username.value || 'user')
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9-_]/g, '-');
+    return `profiles/${safeUsername}-${Date.now()}.${extension}`;
   }
 }

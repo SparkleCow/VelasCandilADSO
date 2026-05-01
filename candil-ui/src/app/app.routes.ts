@@ -7,6 +7,12 @@ export const routes: Routes = [
   ...AUTH_ROUTES,
   ...CANDLE_ROUTES,
   {
+    path: 'cart',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/cart/cart.component').then(m => m.CartComponent)
+  },
+  {
     path: 'profile',
     canActivate: [authGuard],
     loadComponent: () =>

@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from '../../core/guards/auth.guard';
+import { adminGuard } from '../../core/guards/admin.guard';
 
 export const CANDLE_ROUTES: Routes = [
   {
@@ -16,7 +17,7 @@ export const CANDLE_ROUTES: Routes = [
   },
   {
     path: 'candles/create',
-    canActivate: [authGuard],
+    canActivate: [authGuard, adminGuard],
     loadComponent: () =>
       import('./pages/candle-create/candle-create.component').then(m => m.CandleCreateComponent)
   },

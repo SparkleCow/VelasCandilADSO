@@ -15,7 +15,6 @@ public interface AuthenticationService {
 
     AuthResponseDto login(String username, String password);
     void register(AuthRegisterDto authRegisterDto) throws MessagingException;
-    UserInformationDto userInformation(User user);
     void sendValidationEmail(User user) throws MessagingException;
     String generateAndSaveToken(User user);
     String generateToken(int length);

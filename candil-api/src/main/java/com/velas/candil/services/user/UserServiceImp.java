@@ -8,6 +8,7 @@ import com.velas.candil.models.user.UserUpdateDto;
 import com.velas.candil.repositories.UserRepository;
 import com.velas.candil.services.aws.S3Service;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImp implements UserService {
 
     private final UserRepository userRepository;
