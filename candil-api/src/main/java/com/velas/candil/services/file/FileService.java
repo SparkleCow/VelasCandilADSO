@@ -4,6 +4,7 @@ import com.velas.candil.entities.user.User;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface FileService{
 
@@ -38,7 +39,9 @@ public interface FileService{
      * @param data     File bytes to upload (maybe compressed/encrypted).
      * @return Public URL or key of the uploaded file.
      */
-    String uploadDataToS3(MultipartFile data, String key, User user) throws IOException;
+    String uploadSingleFile(MultipartFile data, String key) throws IOException;
+
+    List<String> uploadMultipleFiles(List<MultipartFile> files, String baseKey) throws IOException;
 
     /**
      * Upload profile image to AWS S3.
