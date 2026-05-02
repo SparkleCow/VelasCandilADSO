@@ -76,3 +76,21 @@ logging:
     software:
       amazon:
         awssdk: DEBUG
+
+# ─────────────────────────────────────────────────────────
+#  Mercado Pago Sandbox
+#  Obtén tus credenciales en:
+#  https://www.mercadopago.com.co/developers/panel/credentials
+# ─────────────────────────────────────────────────────────
+mercadopago:
+  # Access token de prueba (empieza con TEST-)
+  access-token: ${TEST-15f8eb47-568b-4437-a1c1-248dbd45c647}
+
+  # URLs de retorno al frontend tras el pago
+  success-url: ${MP_SUCCESS_URL:http://localhost:4200/orders/success}
+  failure-url: ${MP_FAILURE_URL:http://localhost:4200/orders/failure}
+  pending-url: ${MP_PENDING_URL:http://localhost:4200/orders/pending}
+
+  # URL pública del webhook (usa ngrok en local)
+  # Ejemplo: https://xxxx.ngrok-free.app/v1/orders/webhook
+  webhook-url: ${MP_WEBHOOK_URL:https://TU_NGROK_URL/v1/orders/webhook}
